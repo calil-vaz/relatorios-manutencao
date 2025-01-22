@@ -330,7 +330,7 @@ function generatePDF() {
 
   html2pdf()
     .set({
-      margin: [25, 0, 35, 0], 
+      margin: [35, 0, 35, 0], 
       html2canvas: { scale: 2 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
       pagebreak: { mode: ["css", "legacy"] },
