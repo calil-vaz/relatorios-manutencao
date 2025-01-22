@@ -252,7 +252,7 @@ function generatePDF() {
 
   html2pdf()
     .set({
-      margin: [25, 0, 35, 0], 
+      margin: [30, 0, 25, 0], 
       html2canvas: { scale: 2 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
       pagebreak: { mode: ["css", "legacy"] },
@@ -282,7 +282,7 @@ function generatePDF() {
       }
 
       pdf.save(
-        `Loja ${filial.value} - Laudo Descontinuidade Imobilizado - ${requiredInputs[4].value}.pdf`
+        `Loja ${filial.value}-Laudo Descontinuidade Imobilizado-${requiredInputs[4].value}.pdf`
       );
     })
     .then(() => {
