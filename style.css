@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #f2f4f7;
+}
+body main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    margin-top: 8rem;
+}
+
+a {
+    width: fit-content;
+    padding: 1rem;
+    text-decoration: none;
+    text-align: center;
+    color: black;
+    font-weight: 700
+}
+
+p {
+    font-family: monospace;
+    font-size: large;
+}
+
+img {
+    width: 100%;
+    border-radius: 1rem;
+}
+
+@media (min-width: 700px) {
+    body main {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        width: 100%;
+        margin-top: 8rem;
+    }
+    img {
+        width: 50%;
+    }
+}
+
+   
