@@ -15,8 +15,7 @@ window.addEventListener("scroll", function () {
 function mostrarModal() {
   html.style.overflow = "hidden";
   body.style.overflow = "hidden";
-  modal.style.visibility = "visible";
-  modal.style.display = "flex";
+  modal.classList.add("modal-visible")
 }
 function App() {
   const body = document.querySelector("body");
@@ -101,7 +100,7 @@ function App() {
         background: "red",
       },
     }).showToast();
-    return;
+    // return;
   }
   mostrarModal()
   const date = data.value.split("-");
