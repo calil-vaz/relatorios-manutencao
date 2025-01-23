@@ -1,8 +1,68 @@
+:root {
+    --background: #f2f4f7;
+    --background-blue: #072f68;
+    --color-border: #0867ff92;
+    --color-red: #d12127;
+  }
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+#icon-user {
+    font-size: larger;
+    position: fixed;
+    top: 2.7rem;
+    right: 1.5rem;
+  }
+
+  img.logo { 
+    width: 10rem;
+  }
+  
+  div#content-profile {
+    height: 100vh;
+    width: 100vw;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    background-color: var(--background);
+    position: absolute;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    display: none;
+    visibility: hidden;
+  }
+  
+  #containerInputsProfile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 58%;
+  }
+  
+  div#containerInputsProfile input,
+  select {
+    margin: .3rem 0;
+  }
+  
+  #containerInputsProfile div:nth-child(1) {
+    text-align: center;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+    min-width: 17rem;
+    border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  #containerInputsProfile div:nth-child(1) input, select {
+    width: 100%;
+  }
 
 body {
     background: #f2f4f7;
