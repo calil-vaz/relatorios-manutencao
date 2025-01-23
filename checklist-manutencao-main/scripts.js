@@ -1,9 +1,10 @@
 var modal = document.getElementById("modal");
 var html = document.querySelector("html");
 var body = document.querySelector("body");
-
 const content_img = document.querySelector("#content_img");
 const navHeigth = content_img.offsetHeight;
+const savedProfile = localStorage.getItem("savedProfile");
+const valores = JSON.parse(savedProfile);
 
 window.addEventListener("scroll", function () {
   if (window.scrollY >= 10) {
@@ -15,18 +16,13 @@ window.addEventListener("scroll", function () {
 function mostrarModal() {
   html.style.overflow = "hidden";
   body.style.overflow = "hidden";
-  modal.classList.add("modal-visible")
+  modal.style.visibility = "visible";
+  modal.style.display = "flex";
 }
 function App() {
   const body = document.querySelector("body");
   const contentPDF = document.getElementById("content");
-  var bandeira = document.getElementById("selectBandeira");
-  var regional = document.getElementById("selectRegional");
-  var nomeTecnico = document.getElementById("nameTecnico");
-  var filial = document.getElementById("filial");
   var data = document.getElementById("date");
-  var gestor = document.getElementById("manager");
-  var anotacoes = document.getElementById("anotacoes");
   const main = document.getElementById("main");
   let allFilled = true;
   body.classList.add("cssBodyPDF");
@@ -60,12 +56,7 @@ function App() {
   });
 
   var camposObrigatorios = [
-    bandeira,
-    regional,
-    nomeTecnico,
-    filial,
     data,
-    gestor,
   ];
   camposObrigatorios.forEach(function (campo) {
     campo.classList.remove("invalid");
@@ -94,13 +85,13 @@ function App() {
       duration: 3000,
       close: true,
       gravity: "top",
-      position: "right",
+      position: "center",
       stopOnFocus: true,
       style: {
         background: "red",
       },
     }).showToast();
-     return;
+    return;
   }
   mostrarModal()
   const date = data.value.split("-");
@@ -137,13 +128,13 @@ function App() {
           <p>BANDEIRA: </p>
           </td>
           <td>
-          <p>${bandeira.value.toUpperCase()}</p>
+          <p>${valores[0].toUpperCase()}</p>
           </td>
           <td>
           <p>FILIAL: </p>
           </td>
           <td>
-          <p>${filial.value}</p>
+          <p>${valores[1]}</p>
           </td>
           </tr>
           <tr>
@@ -151,7 +142,7 @@ function App() {
           <p>REGIONAL: </p>
           </td>
           <td>
-          <p>${regional.value.toUpperCase()}</p>
+          <p>${valores[4].toUpperCase()}</p>
           </td>
           <td>
           <p>DATA: </p>
@@ -165,13 +156,13 @@ function App() {
           <p>TÉCNICO: </p>
           </td>
           <td>
-          <p>${nomeTecnico.value.toUpperCase()}</p>
+          <p>${valores[2].toUpperCase()}</p>
           </td>
           <td>
           <p>GESTOR: </p>
           </td>
           <td>
-          <p>${gestor.value.toUpperCase()}</p>
+          <p>${valores[3].toUpperCase()}</p>
           </td>
           </tr>
         </tbody>
@@ -278,7 +269,7 @@ function App() {
     html2pdf()
       .set({
         margin: [0, 10, 30, 10],
-        filename: `Loja-${filial.value}_técnico-${nomeTecnico.value}_dia-${date[2]}-${date[1]}-${date[0]}.pdf`,
+        filename: `LOJA ${valores[1]}_CHECKLIST DIÁRIO_DIA-${date[2]}-${date[1]}-${date[0]}.pdf`,
       })
       .from(content)
       .toPdf()
@@ -288,7 +279,7 @@ function App() {
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
 
-        const imgUrl = "../Images/footer.png";
+        const imgUrl = "../images/footer.png";
 
         for (let i = 1; i <= pageCount; i++) {
           pdf.setPage(i);
