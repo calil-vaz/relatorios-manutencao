@@ -11,11 +11,6 @@ tr td p {
   margin: 0;
 }
 
-div#modal.modal-visible {
-  visibility: visible;
-  display: flex;
-}
-
 #contentImgPDF {
   display: flex;
   width: 100%;
