@@ -279,7 +279,7 @@ function App() {
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
 
-        const imgUrl = "../images/footer.png";
+        const imgUrl = "../Images/footer.png";
 
         for (let i = 1; i <= pageCount; i++) {
           pdf.setPage(i);
