@@ -5,24 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatórios Manutenção</title>
     <link rel="icon" href="../Images/icon-gp-pereira.png">
-    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="globall.css">
 </head>
 <body>
+    <div id="content-profile">
+        <img class="logo" src="./images/logo-gp-pereira.svg" alt="Logo">
+        <h2 style="margin: 1rem 0;">EDITAR PERFIL</h2>
+        <div id="containerInputsProfile">
+            <div>
+                <label>BANDEIRA:</label>
+                <br>
+                <select required id="selectBandeira">
+                    <option value="">Selecione a Bandeira</option>
+                    <option value="Fort Atacadista">Fort Atacadista</option>
+                    <option value="Sempre Fort">Sempre Fort</option>
+                    <option value="Bate Fort">Bate Fort</option>
+                    <option value="Comper">Comper</option>
+                    <option value="Perlog">Perlog</option>
+                    <option value="Fort Atacadista Posto">Fort Atacadista Posto</option>
+                </select>
+                <br>
+                <label>LOJA:</label>
+                <br>
+                <input type="number" id="storeProfile" placeholder="Digite o número da sua loja">
+                <br>
+                <label>TÉCNICO:</label>
+                <br>
+                <input id="nameTechnical" type="text" placeholder="Digite seu nome">
+                <br>
+                <label>GESTOR:</label>
+                <br>
+                <input id="gestor" type="text" placeholder="Digite o nome do seu gestor">
+                <br>
+                <label>REGIONAL:</label>
+                <br>
+                <select name="regional" id="regional">
+                    <option value="">Selecione a Regional</option>
+                    <option value="Distrito Federal">Distrito Federal</option>
+                    <option value="Goiás">Goiás</option>
+                    <option value="Mato Grosso">Mato Grosso</option>
+                    <option value="Mato Grosso do Sul">Mato Grosso do Sul</option>
+                    <option value="Rio Grande do Sul">Rio Grande do Sul</option>
+                    <option value="Santa Catarina">Santa Catarina</option>
+                    <option value="São Paulo">São Paulo</option>
+                </select>
+            </div>
+            <div style="width: 17rem; display: flex; justify-content: space-between;">
+                <button id="save_profile" onclick="saveProfile()">Salvar</button>
+                <button id="close_profile" onclick="closeProfile()">Cancelar</button>
+            </div>
+
+        </div>
+        <footer>
+            <p>DESENVOLVIDO POR CALIL ASIR VAZ VELOZO</p>
+            <p>LOJA 295</p>
+        </footer>
+    </div>
     <div id="content_img">
             <img id="logo-form" src="./Images/logo-gp-pereira.svg" alt="Logo Grupo Pereira">
+            <i id="icon-user" class="fa-regular fa-user" onclick="editProfile()"></i>
     </div>
     <main>
-        <a href="/checklist-manutencao-main/index.html">
+        <a onclick="verificarPerfil(event)" href="/checklist-manutencao-main/index.html">
             <p>CHECKLIST DIÁRIO</p>
             <img src="./Images/logo-checklist.jpg" alt="Logo Checklist Diário">
         </a>
-        <a href="/baixa-imobilizados-main/index.html">
+        <a onclick="verificarPerfil(event)" href="/Baixa-Imobilizados-main/index.html">
             <p>BAIXA DE IMOBILIZADOS</p>
             <img src="./Images/logo-baixa-imobilizados.jpg" alt="Logo Baixa de Imobilizados">
         </a>
-        <a href="/relatorio-de-mau-uso-main/index.html">
+        <a onclick="verificarPerfil(event)" href="/relatorio-de-mau-uso-main/index.html">
             <p>RELATÓRIO DE MAU USO</p>
             <img src="./Images/logo-mau-uso.jpg" alt="Logo Relatório de Mau Uso">
         </a>
@@ -31,5 +85,8 @@
         <p>DESENVOLVIDO POR CALIL ASIR VAZ VELOZO</p>
         <p>LOJA 295</p>
     </footer>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="./main.js"></script>
+    <script src="https://kit.fontawesome.com/318c0c8c09.js" crossorigin="anonymous"></script>
 </body>
 </html>
