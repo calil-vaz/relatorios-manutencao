@@ -4,11 +4,10 @@ var body = document.querySelector("body");
 let observacoes = document.getElementById("observacoes")
 let outros = document.getElementById("outros")
 
+const savedProfile = localStorage.getItem("savedProfile");
+const valores = JSON.parse(savedProfile);
 const requiredInputs = [
-  document.getElementById("selectBandeira"),
-  document.getElementById("filial"),
   document.getElementById("date"),
-  document.getElementById("tecnico"),
   document.getElementById("ativo"),
   document.getElementById("marca"),
   document.getElementById("modelo"),
@@ -94,7 +93,7 @@ function generatePDF() {
       input.style.border = "2px solid red";
       allFieldsFilled = false;
     } else {
-      input.style.border = "1px solid #0867ff92";
+      input.style.border = "1px solid var(--background-blue)";
     }
   });
 
@@ -134,21 +133,21 @@ function generatePDF() {
                             BANDEIRA:
                         </th>
                         <th>
-                            ${requiredInputs[0].value.toUpperCase()}
+                            ${valores[0].toUpperCase()}
                         </th>
 
                         <th>
                             FILIAL:
                         </th>
                         <th>
-                            ${requiredInputs[1].value.toUpperCase()}
+                            ${valores[1].toUpperCase()}
                         </th>
 
                         <th>
                             DATA DO RELATÓRIO:
                         </th>
                         <th>
-                            ${formatarData(requiredInputs[2].value)}
+                            ${formatarData(requiredInputs[0].value)}
                         </th>
                     </tr>
                 </thead>
@@ -157,7 +156,7 @@ function generatePDF() {
                 <thead>
                     <tr>
                         <th style="width: 50%;">ELABORADO POR (RESPONSÁVEL):</th>
-                        <th>${requiredInputs[3].value.toUpperCase()}</th>
+                        <th>${valores[3].toUpperCase()}</th>
                     </tr>
                 </thead>
             </table>
@@ -172,11 +171,11 @@ function generatePDF() {
                 <thead>
                     <tr>
                         <th style="width: 25%;">ATIVO:</th>
-                        <th style="width: 15%;">${requiredInputs[4].value.toUpperCase()}</th>
+                        <th style="width: 15%;">${requiredInputs[1].value.toUpperCase()}</th>
                         <th>MARCA</th>
-                        <th>${requiredInputs[5].value.toUpperCase()}</th>
+                        <th>${requiredInputs[2].value.toUpperCase()}</th>
                         <th>MODELO:</th>
-                        <th>${requiredInputs[6].value.toUpperCase()}</th>
+                        <th>${requiredInputs[3].value.toUpperCase()}</th>
                     </tr>
                 </thead>
             </table>
@@ -184,9 +183,9 @@ function generatePDF() {
                 <thead>
                     <tr>                
                         <th>N° DE SÉRIE</th>
-                        <th>${requiredInputs[7].value.toUpperCase()}</th>
+                        <th>${requiredInputs[4].value.toUpperCase()}</th>
                         <th>PATRIMÔNIO:</th>
-                        <th>${requiredInputs[8].value.toUpperCase()}</th> 
+                        <th>${requiredInputs[5].value.toUpperCase()}</th> 
                         <th>OUTROS:</th>
                         <th>${outros.value.toUpperCase()}</th> 
                     </tr>               
@@ -200,7 +199,7 @@ function generatePDF() {
                 </thead>
                 <tbody>
                     <tr>
-                        <th style="text-align: center; height: 160px;">${requiredInputs[9].value.toUpperCase()}</th>
+                        <th style="text-align: center; height: 160px;">${requiredInputs[6].value.toUpperCase()}</th>
                     </tr>
                 </tbody>
             </table>
@@ -217,13 +216,13 @@ function generatePDF() {
                         <th style="width: 30%; height: 160px;">
                             I. SITUAÇÃO VISUAL:
                         </th>
-                        <th>${requiredInputs[10].value.toUpperCase()}</th>
+                        <th>${requiredInputs[7].value.toUpperCase()}</th>
                     </tr>
                     <tr>
                         <th style="width: 30%; height: 180px;">
                             II. SITUAÇÃO DE FUNCIONAMENTO:
                         </th>
-                        <th>${requiredInputs[11].value.toUpperCase()}</th>
+                        <th>${requiredInputs[8].value.toUpperCase()}</th>
                     </tr>
                     <tr class="page-break">
                         <th style="width: 30%; height: 180px;">
@@ -235,7 +234,7 @@ function generatePDF() {
                         <th style="width: 30%; height: 180px;">
                             IV. CONCLUSÃO:
                         </th>
-                        <th>${requiredInputs[12].value.toUpperCase()}</th>
+                        <th>${requiredInputs[9].value.toUpperCase()}</th>
                     </tr>
                     </thead>
             </table>
@@ -252,7 +251,7 @@ function generatePDF() {
 
   html2pdf()
     .set({
-      margin: [30, 0, 25, 0], 
+      margin: [25, 0, 25, 0], 
       html2canvas: { scale: 2 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
       pagebreak: { mode: ["css", "legacy"] },
@@ -282,7 +281,7 @@ function generatePDF() {
       }
 
       pdf.save(
-        `Loja ${filial.value}-Laudo Descontinuidade Imobilizado-${requiredInputs[4].value}.pdf`
+        `Loja ${valores[1]}-LAUDO DESCONTINUIDADE IMOBILIZADO-${requiredInputs[1].value.toUpperCase()}.pdf`
       );
     })
     .then(() => {
@@ -293,7 +292,7 @@ function generatePDF() {
 requiredInputs.forEach((input) => {
   input.addEventListener("input", () => {
     if (input.value) {
-      input.style.border = "1px solid #0867ff92";
+      input.style.border = "1px solid var(--background-blue)";
     } else {
       input.style.border = "1px solid red"; 
     }
