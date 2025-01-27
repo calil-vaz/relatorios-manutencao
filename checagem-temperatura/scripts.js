@@ -3,6 +3,8 @@ var modal = document.getElementById("modal");
 var dataAquisicao = document.getElementById("dataAquisicao");
 var html = document.querySelector("html");
 var body = document.querySelector("body");
+const savedProfile = localStorage.getItem("savedProfile");
+const valores = JSON.parse(savedProfile);
 
 const requiredInputs = [
   document.getElementById("date"),
@@ -113,23 +115,23 @@ function generatePDF() {
                 <thead>
                     <tr>
                         <th style="width: 25%;">BANDEIRA:</th>
-                        <th style="width: 25%;">teste</th>
+                        <th style="width: 25%;">${valores[0].toUpperCase()}</th>
                         <th>FILIAL</th>
-                        <th>teste</th>
+                        <th>${valores[1].toUpperCase()}</th>
                     </tr>
                     <tr>
                         <th>REGIONAL:</th>
-                        <th>teste</th>
+                        <th>${valores[4].toUpperCase()}</th>
                         <th>DATA:</th>
                         <th>${requiredInputs[0].value.toUpperCase()}</th>
                     </tr>
                     <tr>
                         <th>TÉCNICO:</th>
-                        <th>teste</th>
+                        <th>${valores[2].toUpperCase()}</th>
                         <th>GESTOR DE
                         <br>
                          MANUTENÇÃO</th>
-                        <th>teste</th>
+                        <th>${valores[3].toUpperCase()}</th>
                     </tr>
                     
                 </thead>
