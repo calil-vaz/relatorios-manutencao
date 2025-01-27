@@ -1,0 +1,7 @@
+.cardTemperatura {
+    border: 1px black solid;
+    width: fit-content;
+    max-width: 8rem;
+    padding: .4rem;
+    /* background: gray; */
+}
