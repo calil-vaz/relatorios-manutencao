@@ -6,6 +6,10 @@ const navHeigth = content_img.offsetHeight;
 const savedProfile = localStorage.getItem("savedProfile");
 const valores = JSON.parse(savedProfile);
 
+function goBack() {
+  window.history.back();
+}
+
 window.addEventListener("scroll", function () {
   if (window.scrollY >= 10) {
     content_img.classList.add("scroll");
@@ -279,7 +283,7 @@ function App() {
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
 
-        const imgUrl = "../Images/footer.png";
+        const imgUrl = "../images/footer.png";
 
         for (let i = 1; i <= pageCount; i++) {
           pdf.setPage(i);
