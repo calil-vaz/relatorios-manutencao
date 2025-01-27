@@ -6,6 +6,10 @@ var body = document.querySelector("body");
 const savedProfile = localStorage.getItem("savedProfile");
 const valores = JSON.parse(savedProfile);
 
+function goBack() {
+  window.history.back();
+}
+
 const requiredInputs = [
   document.getElementById("date"),
   document.getElementById("primeiroPonto"),
