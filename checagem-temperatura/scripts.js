@@ -183,7 +183,7 @@ function generatePDF() {
                     </tr>
                     </thead>
             </table>           
-            <div style="margin-left: 26rem; margin-top: 3.5rem;" class="cardTemperatura">
+            <div style="margin-left: 26rem; margin-top: 4rem;" class="cardTemperatura">
               <p style="margin: 0;">1° SAÍDA DO DEPÓSITO - PAREDÃO ${requiredInputs[1].value.toUpperCase()}°C</p>
             </div>                   
             <div style="margin-left: 35rem; margin-top: 10.5rem;" class="cardTemperatura">
