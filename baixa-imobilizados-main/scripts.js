@@ -4,8 +4,13 @@ var body = document.querySelector("body");
 let observacoes = document.getElementById("observacoes")
 let outros = document.getElementById("outros")
 
+function goBack() {
+  window.history.back();
+}
+
 const savedProfile = localStorage.getItem("savedProfile");
 const valores = JSON.parse(savedProfile);
+
 const requiredInputs = [
   document.getElementById("date"),
   document.getElementById("ativo"),
@@ -251,7 +256,7 @@ function generatePDF() {
 
   html2pdf()
     .set({
-      margin: [30, 0, 25, 0], 
+      margin: [25, 0, 25, 0], 
       html2canvas: { scale: 2 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
       pagebreak: { mode: ["css", "legacy"] },
