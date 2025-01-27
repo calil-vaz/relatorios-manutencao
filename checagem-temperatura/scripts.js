@@ -1,6 +1,4 @@
-var horaIncidente = document.getElementById("horaIncidente");
 var modal = document.getElementById("modal");
-var dataAquisicao = document.getElementById("dataAquisicao");
 var html = document.querySelector("html");
 var body = document.querySelector("body");
 const savedProfile = localStorage.getItem("savedProfile");
@@ -208,7 +206,7 @@ function generatePDF() {
 
   html2pdf()
     .set({
-      margin: [25, 0, 15, 0], 
+      margin: [25, 0, 10, 0], 
       html2canvas: { scale: 2 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
       pagebreak: { mode: ["css", "legacy"] },
