@@ -1,4 +1,6 @@
+var horaIncidente = document.getElementById("horaIncidente");
 var modal = document.getElementById("modal");
+var dataAquisicao = document.getElementById("dataAquisicao");
 var html = document.querySelector("html");
 var body = document.querySelector("body");
 const savedProfile = localStorage.getItem("savedProfile");
@@ -125,7 +127,7 @@ function generatePDF() {
                         <th>REGIONAL:</th>
                         <th>${valores[4].toUpperCase()}</th>
                         <th>DATA:</th>
-                        <th>${requiredInputs[0].value.toUpperCase()}</th>
+                        <th>${formatarData(requiredInputs[0].value)}</th>
                     </tr>
                     <tr>
                         <th>TÉCNICO:</th>
@@ -181,7 +183,7 @@ function generatePDF() {
                     </tr>
                     </thead>
             </table>           
-            <div style="margin-left: 26rem; margin-top: 4.5rem;" class="cardTemperatura">
+            <div style="margin-left: 26rem; margin-top: 3rem;" class="cardTemperatura">
               <p style="margin: 0;">1° SAÍDA DO DEPÓSITO - PAREDÃO ${requiredInputs[1].value.toUpperCase()}°C</p>
             </div>                   
             <div style="margin-left: 35rem; margin-top: 10.5rem;" class="cardTemperatura">
@@ -206,7 +208,7 @@ function generatePDF() {
 
   html2pdf()
     .set({
-      margin: [25, 0, 10, 0], 
+      margin: [15, 0, 15, 0], 
       html2canvas: { scale: 2 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
       pagebreak: { mode: ["css", "legacy"] },
@@ -238,7 +240,7 @@ function generatePDF() {
       }
 
       pdf.save(
-        `LOJA ${valores[1].toUpperCase()}-CHECAGEM DE TEMPERATURA-${requiredInputs[0].value}.pdf`
+        `LOJA teste-CHECAGEM DE TEMPERATURA-${formatarData(requiredInputs[0].value)}.pdf`
       );
     })
     .then(() => {
