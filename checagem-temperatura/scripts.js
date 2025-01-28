@@ -240,7 +240,7 @@ function generatePDF() {
       }
 
       pdf.save(
-        `LOJA teste-CHECAGEM DE TEMPERATURA-${formatarData(requiredInputs[0].value)}.pdf`
+        `LOJA ${valores[1].toUpperCase()}-CHECAGEM DE TEMPERATURA-${formatarData(requiredInputs[0].value)}.pdf`
       );
     })
     .then(() => {
