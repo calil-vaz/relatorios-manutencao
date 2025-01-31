@@ -1,4 +1,3 @@
-var horaIncidente = document.getElementById("horaIncidente");
 var modal = document.getElementById("modal");
 var dataAquisicao = document.getElementById("dataAquisicao");
 var html = document.querySelector("html");
@@ -26,6 +25,7 @@ const requiredInputs = [
   document.getElementById("recomendacoes"),
   document.getElementById("envolvidos"),
   document.getElementById("supervisor"),
+  document.getElementById("horaIncidente");
   document.getElementById("imageInput1"),
   document.getElementById("imageInput2"),
   document.getElementById("imageInput3"),
@@ -200,7 +200,7 @@ function generatePDF() {
                         <th>DATA DE AQUISIÇÃO DO EQUIPAMENTO:</th>
                         <th>${formatarData(dataAquisicao.value)}</th>
                         <th style="width: 25%;">DATA E HORA DO INCIDENTE</th>
-                        <th style="width: 20%;">${horaIncidente.value.toUpperCase()}</th>
+                        <th style="width: 20%;">${requiredInputs[14].value.toUpperCase()}</th>
                     </tr>
                 </thead>
             </table>
