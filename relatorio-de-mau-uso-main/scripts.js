@@ -25,7 +25,7 @@ const requiredInputs = [
   document.getElementById("recomendacoes"),
   document.getElementById("envolvidos"),
   document.getElementById("supervisor"),
-  document.getElementById("horaIncidente");
+  document.getElementById("horaIncidente"),
   document.getElementById("imageInput1"),
   document.getElementById("imageInput2"),
   document.getElementById("imageInput3"),
