@@ -299,28 +299,44 @@ function generatePDF() {
                         ${requiredInputs[12].value.toUpperCase()}
                         </th>
                     </tr>
-                    <tr>
-                        <th style="width: 30%;">
-                            NOME DO SUPERVISOR:
+                    <tr style="border: 1px black solid">
+                        <th style="width: 30%; height: 7rem">
+                            NOME E ASSINATURA DO(S) GESTOR(ES) DIRETO DO(S) FUNCIONÁRIO(S) CITADO(S) ACIMA: 
+                            <br>
+                            <small>(Ou o nome e assinatura do Gerente de Loja)</small>
                         </th>
-                        <th>
+                        <th style="display: flex; align-items: flex-start; justify-content: center;">
+                        <div>
                         ${requiredInputs[13].value.toUpperCase()}
+                        </div>                     
                         </th>
                     </tr>
                     <tr>
                         <th style="width: 30%;">
-                            ASSINATURA DO SUPERVISOR:
+                            HOUVE RECUSA DA ASSINATURA POR PARTE DA OPERAÇÃO? 
+                            <br>
+                            (  )  SIMㅤ(  )  NÃO
+                            <br></br>
+                            COLETAR ASSINATURA DA TESTEMUNHA:
                         </th>
                         <th></th>
                     </tr>
                     <tr>
                         <th style="width: 30%;">
-                            DATA DA APROVAÇÃO:
+                            ASSINATURA DO GERENTE REGIONAL DE MANUTENÇÃO:
                         </th>
                         <th></th>
                     </tr>
                 </thead>
             </table>
+            <p style="color: white;"> 
+            _________________
+            _________________
+            _________________
+            _________________
+            _________________
+            </p>
+           
   `;
 
   content.insertBefore(beforeElement, anexos);
@@ -371,6 +387,7 @@ function generatePDF() {
       window.location.reload();
     });
 }
+
 
 requiredInputs.forEach((input) => {
   input.addEventListener("input", () => {
