@@ -19,6 +19,16 @@ const requiredInputs = [
   document.getElementById("quintoPonto"),
 ];
 
+requiredInputs.slice(1).forEach((element) => {
+  element.addEventListener("input", function (e) {
+    let value = this.value.replace(/\D/g, ""); 
+    if (value.length > 2) {
+      value = value.slice(0, 2); 
+    }
+    this.value = value;
+  });
+});
+
 function mostrarModal() {
   html.style.overflow = "hidden";
   body.style.overflow = "hidden";
