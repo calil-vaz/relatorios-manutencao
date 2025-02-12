@@ -95,15 +95,24 @@ function generatePDF() {
   let valorPontoUm = document.createElement("div");
 
   valorPontoUm.innerHTML = `
-     <div style="margin-left: 26rem; margin: 0; border: none" class="cardTemperatura">
+     <div style="margin-left: 416px; margin: 0; border: none" class="cardTemperatura">
+              _________
+              _________
+              _________
+              _________
+              _________
+              _________
+              _________
+              _________
+              _________
               _________
               _________
               _________
               _________
             </div>  
-  `
-  valorPontoUm.style.color = "white"
-  
+  `;
+  valorPontoUm.style.color = "white";
+
   content.innerHTML = `
             
             <table>
@@ -183,21 +192,39 @@ function generatePDF() {
                     </tr>
                     </thead>
             </table>           
-            <div style="margin-left: 26rem; margin-top: 3rem;" class="cardTemperatura">
-              <p style="margin: 0;">1° SAÍDA DO DEPÓSITO - PAREDÃO ${requiredInputs[1].value.toUpperCase()}°C</p>
-            </div>                   
-            <div style="margin-left: 35rem; margin-top: 10.5rem;" class="cardTemperatura">
-              <p style="margin: 0;">2° BEBIDAS ${requiredInputs[2].value.toUpperCase()}°C</p>
-            </div>                   
-            <div style="margin-left: 16.5rem; margin-top: -3.5rem;" class="cardTemperatura">
-              <p style="margin: 0;">3° CENTRO <br> DA LOJA ${requiredInputs[3].value.toUpperCase()}°C</p>
-            </div>                   
-            <div style="margin-left: 3rem; margin-top: -9rem;" class="cardTemperatura">
-              <p style="margin: 0;">5° FLV E PERECÍVEIS ${requiredInputs[5].value.toUpperCase()}°C</p>
-            </div>                   
-            <div style="margin-left: 15rem; margin-top: 12rem;" border-bottom: 1px black solid class="cardTemperatura">
-              <p style="margin: 0;">4° FRENTE DE CAIXA ${requiredInputs[4].value.toUpperCase()}°C</p>
-            </div>                   
+            <div class="container">
+
+        <div class="line vertical"></div>
+        <div class="line horizontal"></div>
+
+        <div class="arrow arrow-up"></div>
+        <div class="arrow arrow-down"></div>
+        <div class="arrow arrow-left"></div>
+        <div class="arrow arrow-right"></div>
+
+        <p class="text-box height: auto; top" style="border: 1px black solid; width: 128px;">
+        1° SAÍDA DO DEPÓSITO - PAREDÃO ${requiredInputs[1].value.toUpperCase()}°C
+        </p>
+
+        <p class="text-box height: auto; left" style="border: 1px black solid; width: 128px;">
+        2º PONTO – BEBIDAS ${requiredInputs[2].value.toUpperCase()}°C
+        </p>
+
+
+        <p class="text-box height: auto; center" style="border: 1px black solid; width: 128px;">
+        3º PONTO – CENTRO DA LOJA ${requiredInputs[3].value.toUpperCase()}°C
+        </p>
+
+
+        <p class="text-box height: auto; bottom" style="border: 1px black solid; width: 128px;">
+        4º PONTO – FRENTE DE CAIXA ${requiredInputs[4].value.toUpperCase()}°C
+        </p>
+
+
+        <p class="text-box height: auto; right" style="border: 1px black solid; width: 128px;">
+        5º PONTO – F.L.V. / PERECÍVEIS ${requiredInputs[5].value.toUpperCase()}°C
+        </p>
+    </div>                 
   `;
 
   content.append(valorPontoUm);
@@ -208,7 +235,7 @@ function generatePDF() {
 
   html2pdf()
     .set({
-      margin: [15, 0, 15, 0], 
+      margin: [18, 0, 0, 0],
       html2canvas: { scale: 2 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
       pagebreak: { mode: ["css", "legacy"] },
@@ -216,31 +243,31 @@ function generatePDF() {
     .from(element)
     .toPdf()
     .get("pdf")
-    .then((pdf) =>
-    pdf.addImage("../Images/setas-temperatura.png", "PNG", 44, 150, 120, 120))
     .then((pdf) => {
       const pageCount = pdf.internal.getNumberOfPages();
 
-      const pageWidth = pdf.internal.pageSize.getWidth(); 
-      const pageHeight = pdf.internal.pageSize.getHeight(); 
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
 
       for (let i = 1; i <= pageCount; i++) {
         pdf.setPage(i);
 
         pdf.addImage("../Images/logo-gp-pereira 2.png", "PNG", 85, -4, 40, 40);
-        
+
         pdf.addImage(
           "../Images/footer.png",
-          "PNG", 
-          0, 
-          pageHeight - 20, 
-          pageWidth - 0, 
-          15 
+          "PNG",
+          0,
+          pageHeight - 20,
+          pageWidth - 0,
+          15
         );
       }
 
       pdf.save(
-        `LOJA ${valores[1].toUpperCase()}-CHECAGEM DE TEMPERATURA-${formatarData(requiredInputs[0].value)}.pdf`
+        `LOJA ${valores[1].toUpperCase()}-CHECAGEM DE TEMPERATURA-${formatarData(
+          requiredInputs[0].value
+        )}.pdf`
       );
     })
     .then(() => {
@@ -253,7 +280,7 @@ requiredInputs.forEach((input) => {
     if (input.value) {
       input.style.border = "1px solid var(--background-blue)";
     } else {
-      input.style.border = "1px solid red"; 
+      input.style.border = "1px solid red";
     }
   });
 });
