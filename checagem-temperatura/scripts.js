@@ -3,8 +3,11 @@ var modal = document.getElementById("modal");
 var dataAquisicao = document.getElementById("dataAquisicao");
 var html = document.querySelector("html");
 var body = document.querySelector("body");
+var content = document.getElementById("content");
 const savedProfile = localStorage.getItem("savedProfile");
 const valores = JSON.parse(savedProfile);
+
+content.style.height = "963px";
 
 function goBack() {
   window.history.back();
@@ -21,9 +24,9 @@ const requiredInputs = [
 
 requiredInputs.slice(1).forEach((element) => {
   element.addEventListener("input", function (e) {
-    let value = this.value.replace(/\D/g, ""); 
+    let value = this.value.replace(/\D/g, ""); // Remove tudo que não for número
     if (value.length > 2) {
-      value = value.slice(0, 2); 
+      value = value.slice(0, 2); // Garante no máximo 3 dígitos
     }
     this.value = value;
   });
@@ -245,8 +248,8 @@ function generatePDF() {
 
   html2pdf()
     .set({
-      margin: [30, 0, 0, 0],
-      html2canvas: { scale: 2 },
+      margin: [17, 0, 25, 0],
+      html2canvas: { scale: window.devicePixelRatio > 1 ? 3 : 2 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
       pagebreak: { mode: ["css", "legacy"] },
     })
@@ -255,7 +258,6 @@ function generatePDF() {
     .get("pdf")
     .then((pdf) => {
       const pageCount = pdf.internal.getNumberOfPages();
-
       const pageWidth = pdf.internal.pageSize.getWidth();
       const pageHeight = pdf.internal.pageSize.getHeight();
 
