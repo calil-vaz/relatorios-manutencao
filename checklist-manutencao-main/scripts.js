@@ -59,9 +59,7 @@ function App() {
     });
   });
 
-  var camposObrigatorios = [
-    data,
-  ];
+  var camposObrigatorios = [data];
   camposObrigatorios.forEach(function (campo) {
     campo.classList.remove("invalid");
 
@@ -97,7 +95,7 @@ function App() {
     }).showToast();
     return;
   }
-  mostrarModal()
+  mostrarModal();
   const date = data.value.split("-");
   const dateBR = `${date[2]}/${date[1]}/${date[0]}`;
 
@@ -105,9 +103,6 @@ function App() {
 
   main.innerHTML = `
   <div id="content">
-  <div id="contentImgPDF">
-  <img src="../Images/logo-gp-pereira.svg" style="width: 10rem; margin-left: -4.5rem;" alt="Logo Grupo Pereira">
-  </div>
         <table>
           <thead>
             <tr>
@@ -266,37 +261,52 @@ function App() {
         
         </div>
     </div>
+    <p style="color: white;"> 
+            _________________
+            _________________
+            _________________
+            _________________
+            _________________
+            _________________
+            _________________
+            </p>
     `;
 
-  const content = document.querySelector("#content");
+  const element = document.getElementById("content");
 
-    html2pdf()
-      .set({
-        margin: [0, 10, 30, 10],
-        filename: `LOJA ${valores[1]}_CHECKLIST DIÁRIO_DIA-${date[2]}-${date[1]}-${date[0]}.pdf`,
-      })
-      .from(content)
-      .toPdf()
-      .get("pdf")
-      .then(function (pdf) {
-        const pageCount = pdf.internal.getNumberOfPages();
-        const pageWidth = pdf.internal.pageSize.getWidth();
-        const pageHeight = pdf.internal.pageSize.getHeight();
+  html2pdf()
+    .set({
+      margin: [20, 0, 25, 0],
+      html2canvas: { scale: window.devicePixelRatio > 1 ? 3 : 2 },
+      jsPDF: { format: "a4", orientation: "portrait" },
+      pagebreak: { mode: ["css", "legacy"] },
+    })
+    .from(element)
+    .toPdf()
+    .get("pdf")
+    .then((pdf) => {
+      const pageCount = pdf.internal.getNumberOfPages();
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
 
-        const imgUrl = "../Images/footer.png";
+      for (let i = 1; i <= pageCount; i++) {
+        pdf.setPage(i);
+        pdf.addImage("../Images/logo-gp-pereira 2.png", "PNG", 85, -4, 40, 40);
+        pdf.addImage(
+          "../Images/footer.png",
+          "PNG",
+          0,
+          pageHeight - 20,
+          pageWidth - 0,
+          15
+        );
+      }
 
-        for (let i = 1; i <= pageCount; i++) {
-          pdf.setPage(i);
-          const imgWidth = 210;
-          const imgHeight = 15;
-          const xPos = (pageWidth - imgWidth) / 2;
-          const yPos = pageHeight - imgHeight - 10;
-
-          pdf.addImage(imgUrl, "PNG", xPos, yPos, imgWidth, imgHeight);
-        }}
-      )
-      .save()
-  .then(() => {
-    window.location.reload();
-  });
+      pdf.save(
+        `LOJA ${valores[1]}_CHECKLIST DIÁRIO_DIA-${date[2]}-${date[1]}-${date[0]}.pdf`
+      );
+    })
+    .then(() => {
+      window.location.reload();
+    });
 }
