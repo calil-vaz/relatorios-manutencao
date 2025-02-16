@@ -49,7 +49,7 @@ div#modal {
   visibility: hidden;
 }
 #content {
-  width: 100%;
+  width: 794px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -66,25 +66,25 @@ div#modal {
 }
 
 i.fa-arrow-circle-left {
-    position: fixed;
-    left: 0;
-    margin-left: 1rem;
-    top: 4rem;
-    font-size: 1.5rem;
-    color: var(--background-blue);
+  position: fixed;
+  left: 0;
+  margin-left: 1rem;
+  top: 4rem;
+  font-size: 1.5rem;
+  color: var(--background-blue);
 }
 
 #content_img {
-    padding: 0;
-    background-color: var(--background);
-    top: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-  }
-  #content_img img {
-    width: 10rem;
-  }
+  padding: 0;
+  background-color: var(--background);
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+#content_img img {
+  width: 10rem;
+}
 
 input,
 select,
@@ -196,13 +196,28 @@ td img {
   max-width: 100%;
 }
 
+@keyframes blink {
+  0% {
+    background-color: red;
+  }
+  50% {
+    background-color: var(--background-blue);
+  }
+  100% {
+    background-color: red;
+  }
+}
+
+.blinking {
+  animation: blink 1s infinite;
+}
+
 .custom-file-upload {
   display: inline-block;
   padding: 8px 15px;
   cursor: pointer;
   background-color: var(--background-blue);
   color: white;
-  border: 1px solid var(--background-blue);
   border-radius: 4px;
   font-size: 14px;
   text-align: center;
@@ -214,7 +229,7 @@ td img {
 }
 
 .custom-file-upload.selected {
-  background-color: #28a745; 
+  background-color: #28a745;
   border-color: #28a745;
 }
 
@@ -235,7 +250,7 @@ textarea.error {
   width: 140px;
   height: 140px;
   border: 10px solid transparent;
-  border-top-color: var(--color-red); 
+  border-top-color: var(--color-red);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   box-sizing: border-box;
@@ -259,7 +274,7 @@ footer p {
   margin: 3px;
   font-size: 0.8rem;
   color: white;
-} 
+}
 
 @keyframes spin {
   0% {
