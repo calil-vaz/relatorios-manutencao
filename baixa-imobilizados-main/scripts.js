@@ -1,8 +1,11 @@
 var modal = document.getElementById("modal");
 var html = document.querySelector("html");
 var body = document.querySelector("body");
-let observacoes = document.getElementById("observacoes")
-let outros = document.getElementById("outros")
+let observacoes = document.getElementById("observacoes");
+let outros = document.getElementById("outros");
+var content = document.getElementById("content");
+
+content.style.height = "2550px";
 
 function goBack() {
   window.history.back();
@@ -43,6 +46,7 @@ inputs.forEach((input) => {
   input.addEventListener("change", function () {
     if (input.files.length > 0) {
       label.classList.add("selected");
+      label.classList.remove("blinking");
       label.textContent = "Imagem Selecionada";
     }
   });
@@ -99,6 +103,14 @@ function generatePDF() {
       allFieldsFilled = false;
     } else {
       input.style.border = "1px solid var(--background-blue)";
+    }
+  });
+
+  inputs.forEach((input) => {
+    const label = document.querySelector(`label[for=${input.id}]`);
+
+    if (input.files.length < 1) {
+      label.classList.add("blinking");
     }
   });
 
@@ -256,8 +268,8 @@ function generatePDF() {
 
   html2pdf()
     .set({
-      margin: [30, 0, 25, 0], 
-      html2canvas: { scale: 2 },
+      margin: [20, 0, 25, 0],
+      html2canvas: { scale: window.devicePixelRatio > 1 ? 3 : 2 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
       pagebreak: { mode: ["css", "legacy"] },
     })
@@ -267,26 +279,28 @@ function generatePDF() {
     .then((pdf) => {
       const pageCount = pdf.internal.getNumberOfPages();
 
-      const pageWidth = pdf.internal.pageSize.getWidth(); 
-      const pageHeight = pdf.internal.pageSize.getHeight(); 
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
 
       for (let i = 1; i <= pageCount; i++) {
         pdf.setPage(i);
 
         pdf.addImage("../Images/logo-gp-pereira 2.png", "PNG", 85, -4, 40, 40);
-        
+
         pdf.addImage(
           "../Images/footer.png",
-          "PNG", 
-          0, 
-          pageHeight - 20, 
-          pageWidth - 0, 
-          15 
+          "PNG",
+          0,
+          pageHeight - 20,
+          pageWidth - 0,
+          15
         );
       }
 
       pdf.save(
-        `Loja ${valores[1]}-LAUDO DESCONTINUIDADE IMOBILIZADO-${requiredInputs[1].value.toUpperCase()}.pdf`
+        `LOJA ${
+          valores[1]
+        }-LAUDO DESCONTINUIDADE IMOBILIZADO-${requiredInputs[1].value.toUpperCase()}.pdf`
       );
     })
     .then(() => {
@@ -299,7 +313,7 @@ requiredInputs.forEach((input) => {
     if (input.value) {
       input.style.border = "1px solid var(--background-blue)";
     } else {
-      input.style.border = "1px solid red"; 
+      input.style.border = "1px solid red";
     }
   });
 });
