@@ -275,9 +275,8 @@ function App() {
 
   html2pdf()
     .set({
-      margin: [20, 0, 20, 0],
+      margin: [25, 0, 20, 0],
       html2canvas: { scale: window.devicePixelRatio > 1 ? 3 : 2 },
-      // jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
       jsPDF: { format: "a4", orientation: "portrait" },
       pagebreak: { mode: ["css", "legacy"] },
     })
