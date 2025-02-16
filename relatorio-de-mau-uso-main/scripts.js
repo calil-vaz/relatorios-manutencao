@@ -1,7 +1,10 @@
 var modal = document.getElementById("modal");
 var dataAquisicao = document.getElementById("dataAquisicao");
+var content = document.getElementById("content");
 var html = document.querySelector("html");
 var body = document.querySelector("body");
+
+content.style.height = "2850px";
 
 function goBack() {
   window.history.back();
@@ -47,6 +50,7 @@ inputs.forEach((input) => {
   input.addEventListener("change", function () {
     if (input.files.length > 0) {
       label.classList.add("selected");
+      label.classList.remove("blinking");
       label.textContent = "Imagem Selecionada";
     }
   });
@@ -94,6 +98,8 @@ function handleImageSelection(input, imageId) {
   }
 }
 
+console.log();
+
 function generatePDF() {
   let allFieldsFilled = true;
 
@@ -103,6 +109,14 @@ function generatePDF() {
       allFieldsFilled = false;
     } else {
       input.style.border = "1px solid var(--background-blue)";
+    }
+  });
+
+  inputs.forEach((input) => {
+    const label = document.querySelector(`label[for=${input.id}]`);
+
+    if (input.files.length < 1) {
+      label.classList.add("blinking");
     }
   });
 
@@ -329,6 +343,7 @@ function generatePDF() {
                     </tr>
                 </thead>
             </table>
+            
             <p style="color: white;"> 
             _________________
             _________________
@@ -352,9 +367,9 @@ function generatePDF() {
 
   html2pdf()
     .set({
-      margin: [15, 0, 25, 0], 
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+      margin: [20, 0, 25, 0],
+      html2canvas: { scale: window.devicePixelRatio > 1 ? 3 : 2 },
+      jsPDF: { format: "a4", orientation: "portrait" },
       pagebreak: { mode: ["css", "legacy"] },
     })
     .from(element)
@@ -362,27 +377,26 @@ function generatePDF() {
     .get("pdf")
     .then((pdf) => {
       const pageCount = pdf.internal.getNumberOfPages();
-
-      const pageWidth = pdf.internal.pageSize.getWidth(); 
-      const pageHeight = pdf.internal.pageSize.getHeight(); 
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
 
       for (let i = 1; i <= pageCount; i++) {
         pdf.setPage(i);
-
         pdf.addImage("../Images/logo-gp-pereira 2.png", "PNG", 85, -4, 40, 40);
-        
         pdf.addImage(
           "../Images/footer.png",
-          "PNG", 
-          0, 
-          pageHeight - 20, 
-          pageWidth - 0, 
-          15 
+          "PNG",
+          0,
+          pageHeight - 20,
+          pageWidth - 0,
+          15
         );
       }
 
       pdf.save(
-        `LOJA ${valores[1]}-RELATÓRIO DE MAU USO-${requiredInputs[1].value.toUpperCase()}.pdf`
+        `LOJA ${
+          valores[1]
+        }-RELATÓRIO DE MAU USO-${requiredInputs[1].value.toUpperCase()}.pdf`
       );
     })
     .then(() => {
@@ -390,13 +404,12 @@ function generatePDF() {
     });
 }
 
-
 requiredInputs.forEach((input) => {
   input.addEventListener("input", () => {
     if (input.value) {
       input.style.border = "1px solid var(--background-blue)";
     } else {
-      input.style.border = "1px solid red"; 
+      input.style.border = "1px solid red";
     }
   });
 });
