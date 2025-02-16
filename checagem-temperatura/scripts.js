@@ -7,7 +7,7 @@ var content = document.getElementById("content");
 const savedProfile = localStorage.getItem("savedProfile");
 const valores = JSON.parse(savedProfile);
 
-content.style.height = "957px";
+content.style.height = "955px";
 
 function goBack() {
   window.history.back();
