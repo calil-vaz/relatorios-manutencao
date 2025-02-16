@@ -4,7 +4,7 @@ var content = document.getElementById("content");
 var html = document.querySelector("html");
 var body = document.querySelector("body");
 
-content.style.height = "2850px";
+content.style.height = "2700px";
 
 function goBack() {
   window.history.back();
