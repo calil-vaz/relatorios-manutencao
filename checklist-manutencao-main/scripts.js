@@ -25,7 +25,6 @@ function mostrarModal() {
 }
 function App() {
   const body = document.querySelector("body");
-  const contentPDF = document.getElementById("content");
   var data = document.getElementById("date");
   const main = document.getElementById("main");
   let allFilled = true;
@@ -276,8 +275,9 @@ function App() {
 
   html2pdf()
     .set({
-      margin: [20, 0, 25, 0],
+      margin: [20, 0, 20, 0],
       html2canvas: { scale: window.devicePixelRatio > 1 ? 3 : 2 },
+      // jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
       jsPDF: { format: "a4", orientation: "portrait" },
       pagebreak: { mode: ["css", "legacy"] },
     })
@@ -301,7 +301,6 @@ function App() {
           15
         );
       }
-
       pdf.save(
         `LOJA ${valores[1]}_CHECKLIST DIÁRIO_DIA-${date[2]}-${date[1]}-${date[0]}.pdf`
       );
