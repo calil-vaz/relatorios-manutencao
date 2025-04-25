@@ -4,7 +4,7 @@ var content = document.getElementById("content");
 var html = document.querySelector("html");
 var body = document.querySelector("body");
 
-content.style.height = "2700px";
+content.style.height = "3300px";
 
 function goBack() {
   window.history.back();
@@ -276,18 +276,26 @@ function generatePDF() {
             <table>
                 <thead>
                     <tr>
-                        <th style="width: 30%; height: 180px;">
+                        <th style="width: 30%; height: 200px;">
                             MEDIDAS IMEDIATAS:
                             <small>(Descrever as ações tomadas imediatamente após o incidente.)</small>
                         </th>
                         <th>${requiredInputs[10].value.toUpperCase()}</th>
                     </tr>
                     <tr>
-                        <th style="width: 30%; height: 180px;">
+                        <th style="width: 30%; height: 200px;">
                             RECOMENDAÇÕES PARA PREVENÇÃO FUTURA:
                             <small>(Sugestões de como evitar que isso ocorra novamente, como treinamentos,
                                 sinalizações,
                                 etc.)</small>
+                        </th>
+                        <th>${requiredInputs[11].value.toUpperCase()}</th>
+                    </tr>
+                    <tr>
+                        <th style="width: 30%; height: 200px;">
+                            INFORMAR O <red style="color: red;
+                    font-weight: bold;">CUSTO</red> GERADO PELO MAU USO:
+                            <small>(Quanto foi gasto com peças, reparos, consertos, custo aproximado de perda de produtos ou produção.)</small>
                         </th>
                         <th>${requiredInputs[11].value.toUpperCase()}</th>
                     </tr>
@@ -296,7 +304,7 @@ function generatePDF() {
   `;
 
   afterElement.innerHTML = `
-    <table>
+    <table class="page-break">
                 <thead>
                     <tr>
                         <th style="text-align: center;">6.APROVAÇÃO:</th>
@@ -342,32 +350,19 @@ function generatePDF() {
                         <th></th>
                     </tr>
                 </thead>
-            </table>
-            
-            <p style="color: white;"> 
-            _________________
-            _________________
-            _________________
-            _________________
-            _________________
-            _________________
-            _________________
-            </p>
-           
+            </table> 
   `;
 
   content.insertBefore(beforeElement, anexos);
   content.append(afterElement);
 
-  content.insertBefore(beforeElement, anexos);
-  content.append(afterElement);
   document.getElementById("content").style.display = "block";
   const element = document.getElementById("content");
   mostrarModal();
 
   html2pdf()
     .set({
-      margin: [30, 0, 25, 0],
+      margin: [20, 0, 25, 0],
       html2canvas: { scale: window.devicePixelRatio > 1 ? 3 : 2 },
       jsPDF: { format: "a4", orientation: "portrait" },
       pagebreak: { mode: ["css", "legacy"] },
