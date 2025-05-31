@@ -3,6 +3,7 @@ var dataAquisicao = document.getElementById("dataAquisicao");
 var content = document.getElementById("content");
 var html = document.querySelector("html");
 var body = document.querySelector("body");
+var custo = document.getElementById('custo')
 
 content.style.height = "3300px";
 
@@ -297,7 +298,7 @@ function generatePDF() {
                     font-weight: bold;">CUSTO</red> GERADO PELO MAU USO:
                             <small>(Quanto foi gasto com peças, reparos, consertos, custo aproximado de perda de produtos ou produção.)</small>
                         </th>
-                        <th>${requiredInputs[11].value.toUpperCase()}</th>
+                        <th>${custo.value.toUpperCase()}</th>
                     </tr>
                 </thead>
             </table>
