@@ -4,15 +4,36 @@ let bandeira = document.getElementById("selectBandeira");
 let regional = document.getElementById("regional");
 let loja = document.getElementById("storeProfile");
 let tecnico = document.getElementById("nameTechnical");
+let matricula = document.getElementById("matricula");
 let gestor = document.getElementById("gestor");
 const containerInputsProfile = document.getElementById("containerInputsProfile");
 
 window.addEventListener("load", function () {
-    let savedInputs = localStorage.getItem("savedInputs");
-    if (savedInputs) {
+  const savedInputs = localStorage.getItem("savedInputs");
+  const savedProfile = localStorage.getItem("savedProfile");
+
+  if (savedInputs && savedProfile) {
+    if (savedInputs.includes('id="matricula"')) {
       containerInputsProfile.innerHTML = savedInputs;
+    } else {
+      Toastify({
+        text: "Seu perfil está desatualizado. Atualize para continuar.",
+        duration: 5000,
+        gravity: "top",
+        position: "center",
+        style: {
+          background: "#f39c12",
+        },
+      }).showToast();
+
+      localStorage.removeItem("savedInputs");
+      localStorage.removeItem("savedProfile");
+
+      editProfile();
     }
-  });
+  }
+});
+
 
 function verificarPerfil(event) {
     if (localStorage.getItem("savedProfile") == null) {
@@ -45,9 +66,10 @@ function editProfile() {
     let bandeira = document.getElementById("selectBandeira").value;
     let loja = document.getElementById("storeProfile").value;
     let tecnico = document.getElementById("nameTechnical").value;
+    let matricula = document.getElementById("matricula").value;
     let gestor = document.getElementById("gestor").value;
     let regional = document.getElementById("regional").value;
-    if (!bandeira || !loja || !tecnico || !gestor || !regional) {
+    if (!bandeira || !loja || !tecnico || !gestor || !regional || !matricula) {
       Toastify({
         text: "Preencha todos os campos",
         duration: 3000,
@@ -63,7 +85,8 @@ function editProfile() {
     }
     containerInputsProfile.innerHTML = `
       <div>
-        <label>Bandeira:</label>
+      <h2 style="margin: 1rem 0;">EDITAR PERFIL</h2>
+        <label for="selectBandeira"l>Bandeira:</label>
         <br>
         <select required id="selectBandeira">
           <option value="${bandeira}">Atual: ${bandeira}</option>
@@ -75,21 +98,23 @@ function editProfile() {
           <option value="Fort Atacadista Posto">Fort Atacadista Posto</option>
         </select>
         <br>
-        <label>Loja:</label>
+        <label for="storeProfile">Loja:</label>
         <br>
-        <input value="${loja}" type="number" id="storeProfile" placeholder="${loja}">
+        <input required value="${loja}" type="number" id="storeProfile" placeholder="${loja}">
         <br>
-        <label>Técnico:</label>
+        <label for="nameTechnical">TÉCNICO: <span style="color: red; font-size: small;">(digite seu nome completo)</span></label>
         <br>
-        <input value="${tecnico}" id="nameTechnical" type="text" placeholder="${tecnico}">
-      <br>
-                <label>GESTOR:</label>
+        <input required value="${tecnico}" id="nameTechnical" type="text" placeholder="${tecnico}">
+      <br>      
+      <label for="matricula">MATRÍCULA</label><br>
+      <input required id="matricula"  value="${matricula}" type="number" placeholder=${matricula}><br>
+                <label for="gestor">GESTOR: <span style="color: red; font-size: small;">(nome completo)</span></label>
                 <br>
-                <input value="${gestor}" id="gestor" type="text"   placeholder="${gestor}">
+                <input required value="${gestor}" id="gestor" type="text"   placeholder="${gestor}">
                 <br>
-                <label>REGIONAL:</label>
+                <label for="regional">REGIONAL:</label>
                 <br>
-                <select name="regional" id="regional">
+                <select required name="regional" id="regional">
                     <option value="${regional}">${regional}</option>
                     <option value="Distrito Federal">Distrito Federal</option>
                     <option value="Goiás">Goiás</option>
@@ -105,7 +130,7 @@ function editProfile() {
                 <button id="close_profile" onclick="closeProfile()">Cancelar</button>
             </div>
     `;
-    const valueProfile = [bandeira, loja, tecnico, gestor, regional ];
+    const valueProfile = [bandeira, loja, tecnico, matricula, gestor, regional ];
     localStorage.setItem("savedProfile", JSON.stringify(valueProfile));
     localStorage.setItem("savedInputs", containerInputsProfile.innerHTML);
     iconUser.style.color = "black";
@@ -123,6 +148,7 @@ function editProfile() {
 
     const savedProfile = localStorage.getItem("savedProfile");
     const valores = JSON.parse(savedProfile);
-
+    
+    console.log(valores);
     closeProfile();
   }
