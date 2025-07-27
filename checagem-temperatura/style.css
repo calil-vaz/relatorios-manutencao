@@ -17,16 +17,16 @@
 
 .vertical {
   width: 3px;
-  height: 450px;
+  height: 400px;
   top: 60px;
   left: 392px;
 }
 
 .horizontal {
-  width: 450px;
+  width: 400px;
   height: 3px;
-  top: 285px;
-  left: 170px;
+  top: 260px;
+  left: 195px;
 }
 
 .arrow {
@@ -47,7 +47,7 @@
 .arrow-down {
   height: 3px;
   background: black;
-  bottom: -161px;
+  bottom: -110px;
   left: 369px;
 }
 
@@ -57,8 +57,8 @@
   border-right: 0;
   width: 3px;
   background: black;
-  top: 263px;
-  left: 170px;
+  top: 240px;
+  left: 192px;
 }
 
 .arrow-right {
@@ -67,8 +67,8 @@
   border-right: 0;
   width: 3px;
   background: black;
-  top: 263px;
-  right: 12px;
+  top: 240px;
+  right: 38px;
 }
 
 .text-box {
@@ -81,8 +81,8 @@
 }
 
 .center {
-  top: 280px;
-  left: 255px;
+  top: 250px;
+  left: 257px;
 }
 
 .top {
@@ -91,16 +91,16 @@
 }
 
 .bottom {
-  bottom: -170px;
+  bottom: -120px;
   left: 400px;
 }
 
 .left {
-  top: 202px;
-  left: 78px;
+  top: 180px;
+  left: 130px;
 }
 
 .right {
-  top: 297px;
-  right: -80px;
+  top: 275px;
+  right: -30px;
 }
