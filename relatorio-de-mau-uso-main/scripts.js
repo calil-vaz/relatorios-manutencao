@@ -3,7 +3,8 @@ var dataAquisicao = document.getElementById("dataAquisicao");
 var content = document.getElementById("content");
 var html = document.querySelector("html");
 var body = document.querySelector("body");
-var custo = document.getElementById('custo')
+var solicitacaoServico = document.getElementById("solicitacaoServico");
+var requisicaoNimbi = document.getElementById("requisicaoNimbi");
 
 content.style.height = "3300px";
 
@@ -42,6 +43,32 @@ function mostrarModal() {
   modal.style.visibility = "visible";
   modal.style.display = "flex";
 }
+
+const inputCusto = document.getElementById("custo");
+
+  inputCusto.addEventListener("input", (e) => {
+    let valor = e.target.value;
+
+    valor = valor.replace(/\D/g, "");
+
+    if (valor === "") {
+      e.target.value = "";
+      return;
+    }
+
+    valor = (parseInt(valor) / 100).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL"
+    });
+
+    e.target.value = valor;
+  });
+
+  inputCusto.addEventListener("blur", (e) => {
+    if (!e.target.value) {
+      e.target.value = "R$ 0,00";
+    }
+  });
 
 const inputs = document.querySelectorAll('input[type="file"]');
 
@@ -99,8 +126,6 @@ function handleImageSelection(input, imageId) {
   }
 }
 
-console.log();
-
 function generatePDF() {
   let allFieldsFilled = true;
 
@@ -136,16 +161,16 @@ function generatePDF() {
     return;
   }
 
+  const numeroAleatorio = Math.floor(1000 + Math.random() * 9000);
+
   let beforeElement = document.createElement("div");
   let afterElement = document.createElement("div");
 
-  beforeElement.innerHTML = `
-
-            <table>
+  beforeElement.innerHTML = `<table>
                 <thead>
                     <tr>
                         <th style="text-align: center; font-size: x-large;">
-                            RELATÓRIO DE MAU USO
+                            RELATÓRIO DE MAU USO - N°${numeroAleatorio}
                         </th>
                     </tr>
                 </thead>
@@ -179,8 +204,10 @@ function generatePDF() {
             <table>
                 <thead>
                     <tr>
-                        <th style="width: 50%;">ELABORADO POR (RESPONSÁVEL):</th>
-                        <th>${valores[2].toUpperCase()}</th>
+                        <th style="width: 25%;">ELABORADO POR:</th>
+                        <th style="width: 35%;">${valores[2].toUpperCase()}</th>
+                        <th style="width: 20%;"> MATRÍCULA: </th>
+                        <th style="width: 20%;">${valores[3].toUpperCase()}</th>
                     </tr>
                 </thead>
             </table>
@@ -193,6 +220,14 @@ function generatePDF() {
             </table>
             <table>
                 <thead>
+
+                    <tr>
+                        <th style="width: 25%;">SOLICITAÇÃO DE SERVIÇO:</th>
+                        <th style="width: 15%;">${solicitacaoServico.value.toUpperCase()}</th>
+                        <th>REQUISIÇÃO NIMBI</th>
+                        <th>${requisicaoNimbi.value.toUpperCase()}</th>
+                    </tr>
+
                     <tr>
                         <th style="width: 25%;">ATIVO:</th>
                         <th style="width: 15%;">${requiredInputs[1].value.toUpperCase()}</th>
@@ -298,11 +333,11 @@ function generatePDF() {
                     font-weight: bold;">CUSTO</red> GERADO PELO MAU USO:
                             <small>(Quanto foi gasto com peças, reparos, consertos, custo aproximado de perda de produtos ou produção.)</small>
                         </th>
-                        <th>${custo.value.toUpperCase()}</th>
+                        <th>${inputCusto.value.toUpperCase()}</th>
                     </tr>
                 </thead>
             </table>
-  `;
+  ` 
 
   afterElement.innerHTML = `
     <table class="page-break">
