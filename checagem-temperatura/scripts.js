@@ -58,26 +58,6 @@ function formatarData(data) {
   return dateBR;
 }
 
-function handleImageSelection(input, imageId) {
-  if (input.files && input.files[0]) {
-    const file = input.files[0];
-    const reader = new FileReader();
-
-    reader.onload = function (event) {
-      const imgElement = document.createElement("img");
-      imgElement.src = event.target.result;
-
-      const targetCell = document.getElementById(imageId);
-      targetCell.innerHTML = "";
-      targetCell.appendChild(imgElement);
-    };
-
-    reader.readAsDataURL(file);
-  } else {
-    alert("Por favor, selecione ou tire uma foto.");
-  }
-}
-
 function generatePDF() {
   let allFieldsFilled = true;
 
@@ -105,27 +85,6 @@ function generatePDF() {
     return;
   }
 
-  let valorPontoUm = document.createElement("div");
-
-  valorPontoUm.innerHTML = `
-     <div style="margin-left: 416px; margin: 0; border: none" class="cardTemperatura">
-              _________
-              _________
-              _________
-              _________
-              _________
-              _________
-              _________
-              _________
-              _________
-              _________
-              _________
-              _________
-              _________
-            </div>  
-  `;
-  valorPontoUm.style.color = "white";
-
   content.innerHTML = `
             
             <table>
@@ -136,7 +95,7 @@ function generatePDF() {
                         </th>
                     </tr>
                 </thead>
-            </table>
+            </table> 
             <table>
                 <thead>
                     <tr>
@@ -146,7 +105,7 @@ function generatePDF() {
                         <th>${valores[1].toUpperCase()}</th>
                     </tr>
                     <tr>
-                        <th>REGIONAL:</th>
+                        <th>GESTOR:</th>
                         <th>${valores[4].toUpperCase()}</th>
                         <th>DATA:</th>
                         <th>${formatarData(requiredInputs[0].value)}</th>
@@ -154,9 +113,7 @@ function generatePDF() {
                     <tr>
                         <th>TÉCNICO:</th>
                         <th>${valores[2].toUpperCase()}</th>
-                        <th>GESTOR DE
-                        <br>
-                         MANUTENÇÃO</th>
+                        <th>MATRÍCULA</th>
                         <th>${valores[3].toUpperCase()}</th>
                     </tr>
                     
@@ -239,8 +196,6 @@ function generatePDF() {
         </p>
     </div>                 
   `;
-
-  content.append(valorPontoUm);
 
   document.getElementById("content").style.display = "block";
   const element = document.getElementById("content");
