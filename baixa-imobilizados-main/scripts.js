@@ -172,8 +172,10 @@ function generatePDF() {
             <table>
                 <thead>
                     <tr>
-                        <th style="width: 50%;">ELABORADO POR (RESPONSÁVEL):</th>
-                        <th>${valores[3].toUpperCase()}</th>
+                        <th style="width: 25%;">ELABORADO POR:</th>
+                        <th style="width: 35%;">${valores[2].toUpperCase()}</th>
+                        <th style="width: 20%;"> MATRÍCULA: </th>
+                        <th style="width: 20%;">${valores[3].toUpperCase()}</th>
                     </tr>
                 </thead>
             </table>
