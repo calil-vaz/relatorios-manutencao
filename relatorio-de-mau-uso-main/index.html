@@ -32,8 +32,14 @@
             <h2 style="text-align: center;">RELATÓRIO DE MAU USO</h2>
         </div>
         <form id="form">
-            <label>DATA DO RELATÓRIO:</label>
+            <label for="date">DATA DO RELATÓRIO:</label>
             <input type="date" id="date">
+            
+            <label for="solicitacaoServico">DIGITE O NÚMERO DA S.S.</label>
+            <input type="number" id="solicitacaoServico" placeholder="Solicitação de Serviço">
+
+            <label for="requisicaoNimbi">DIGITE O NÚMERO DA REQUISIÇÃO (NIMBI)</label>
+            <input type="number" id="requisicaoNimbi" placeholder="Requisição do nimbi">
 
             <h4>1. REGISTRO DE ESPECIFICAÇÕES TÉCNICAS</h4>
 
@@ -136,7 +142,7 @@
                     font-weight: bold;">*Opcional</red>.
                 </small>
 
-                <textarea name="" id="custo" cols="30"></textarea>
+                 <input placeholder="R$ 0,00" type="text" id="custo" />
             </div>
 
             <h4>5. ANEXOS</h4>
