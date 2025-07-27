@@ -12,46 +12,45 @@
 <body>
     <div id="content-profile">
         <img class="logo" src="/Images/logo-gp-pereira.svg" alt="Logo">
-        <h2 style="margin: 1rem 0;">EDITAR PERFIL</h2>
         <div id="containerInputsProfile">
             <div>
-                <label>BANDEIRA:</label>
-                <br>
-                <select required id="selectBandeira">
-                    <option value="">Selecione a Bandeira</option>
-                    <option value="Fort Atacadista">Fort Atacadista</option>
-                    <option value="Sempre Fort">Sempre Fort</option>
-                    <option value="Bate Fort">Bate Fort</option>
-                    <option value="Comper">Comper</option>
-                    <option value="Perlog">Perlog</option>
-                    <option value="Fort Atacadista Posto">Fort Atacadista Posto</option>
-                </select>
-                <br>
-                <label>LOJA:</label>
-                <br>
-                <input type="number" id="storeProfile" placeholder="Digite o número da sua loja">
-                <br>
-                <label>TÉCNICO:</label>
-                <br>
-                <input id="nameTechnical" type="text" placeholder="Digite seu nome">
-                <br>
-                <label>GESTOR:</label>
-                <br>
-                <input id="gestor" type="text" placeholder="Digite o nome do seu gestor">
-                <br>
-                <label>REGIONAL:</label>
-                <br>
-                <select name="regional" id="regional">
-                    <option value="">Selecione a Regional</option>
-                    <option value="Distrito Federal">Distrito Federal</option>
-                    <option value="Goiás">Goiás</option>
-                    <option value="Mato Grosso">Mato Grosso</option>
-                    <option value="Mato Grosso do Sul">Mato Grosso do Sul</option>
-                    <option value="Rio Grande do Sul">Rio Grande do Sul</option>
-                    <option value="Santa Catarina">Santa Catarina</option>
-                    <option value="São Paulo">São Paulo</option>
-                </select>
-            </div>
+        <h2 style="margin: 1rem 0;">EDITAR PERFIL</h2>
+    <label for="selectBandeira">BANDEIRA:</label><br>
+    <select required id="selectBandeira">
+        <option value="">Selecione a Bandeira</option>
+        <option value="Fort Atacadista">Fort Atacadista</option>
+        <option value="Sempre Fort">Sempre Fort</option>
+        <option value="Bate Fort">Bate Fort</option>
+        <option value="Comper">Comper</option>
+        <option value="Perlog">Perlog</option>
+        <option value="Fort Atacadista Posto">Fort Atacadista Posto</option>
+    </select><br>
+
+    <label for="storeProfile">LOJA:</label><br>
+    <input required type="number" id="storeProfile" placeholder="Digite o número da sua loja"><br>
+
+    <label for="nameTechnical">TÉCNICO: <span style="color: red; font-size: small;">(digite seu nome completo)</span></label><br>
+    <input required id="nameTechnical" type="text" placeholder="Digite seu nome completo"><br>
+
+    <label for="matricula">MATRÍCULA:</label><br>
+    <input required id="matricula" type="number" placeholder="Digite sua matrícula"><br>
+
+    <label for="gestor">GESTOR: <span style="color: red; font-size: small;">(nome completo)</span></label><br>
+    <input required id="gestor" type="text" placeholder="Digite o nome do seu gestor"><br>
+
+    <label for="regional">REGIONAL:</label><br>
+    <select required name="regional" id="regional">
+        <option value="">Selecione a Regional</option>
+        <option value="Distrito Federal">Distrito Federal</option>
+        <option value="Goiás">Goiás</option>
+        <option value="Mato Grosso">Mato Grosso</option>
+        <option value="Mato Grosso do Sul">Mato Grosso do Sul</option>
+        <option value="Rio Grande do Sul">Rio Grande do Sul</option>
+        <option value="Santa Catarina">Santa Catarina</option>
+        <option value="São Paulo">São Paulo</option>
+    </select>
+</div>
+
             <div style="width: 17rem; display: flex; justify-content: space-between;">
                 <button id="save_profile" onclick="saveProfile()">Salvar</button>
                 <button id="close_profile" onclick="closeProfile()">Cancelar</button>
