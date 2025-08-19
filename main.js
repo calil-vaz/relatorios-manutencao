@@ -12,9 +12,46 @@ window.addEventListener("load", function () {
   const savedInputs = localStorage.getItem("savedInputs");
   const savedProfile = localStorage.getItem("savedProfile");
 
+  console.log(savedInputs);
+
   if (savedInputs && savedProfile) {
+    // Verificar se o perfil tem campo matrícula (garantia de compatibilidade)
     if (savedInputs.includes('id="matricula"')) {
       containerInputsProfile.innerHTML = savedInputs;
+
+      // Verifica as bandeiras
+      const valores = JSON.parse(savedProfile);
+      const bandeiraSalva = valores; 
+      const bandeirasDisponiveis = [
+        "Fort Atacadista",
+        "Sempre Fort",
+        "Bate Fort",
+        "Comper",
+        "Perlog",
+        "Fort Atacadista Posto",
+        "Trudys"
+      ];
+
+      console.log(bandeiraSalva);
+      console.log(bandeirasDisponiveis);
+      
+
+      if (!bandeirasDisponiveis.includes(bandeiraSalva)) {
+        Toastify({
+          text: "Seu perfil está desatualizado. Atualize para continuar.",
+          duration: 5000,
+          gravity: "top",
+          position: "center",
+          style: {
+            background: "#f39c12",
+          },
+        }).showToast();
+
+        localStorage.removeItem("savedInputs");
+        localStorage.removeItem("savedProfile");
+        editProfile();
+      }
+
     } else {
       Toastify({
         text: "Seu perfil está desatualizado. Atualize para continuar.",
@@ -33,6 +70,7 @@ window.addEventListener("load", function () {
     }
   }
 });
+
 
 
 function verificarPerfil(event) {
@@ -86,7 +124,7 @@ function editProfile() {
     containerInputsProfile.innerHTML = `
       <div>
       <h2 style="margin: 1rem 0;">EDITAR PERFIL</h2>
-        <label for="selectBandeira"l>Bandeira:</label>
+        <label for="selectBandeira">Bandeira:</label>
         <br>
         <select required id="selectBandeira">
           <option value="${bandeira}">Atual: ${bandeira}</option>
@@ -96,6 +134,7 @@ function editProfile() {
           <option value="Comper">Comper</option>
           <option value="Perlog">Perlog</option>
           <option value="Fort Atacadista Posto">Fort Atacadista Posto</option>
+          <option value="Trudys">Trudys</option>
         </select>
         <br>
         <label for="storeProfile">Loja:</label>
