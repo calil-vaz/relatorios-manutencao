@@ -425,7 +425,7 @@ function generatePDF() {
       }
 
       pdf.save(
-        `LOJA ${
+        `${numeroAleatorio}-LOJA ${
           valores[1]
         }-RELATÓRIO DE MAU USO-${requiredInputs[1].value.toUpperCase()}.pdf`
       );
@@ -444,3 +444,4 @@ requiredInputs.forEach((input) => {
     }
   });
 });
+
