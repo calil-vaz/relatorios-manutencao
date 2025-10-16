@@ -359,9 +359,8 @@ function generatePDF() {
                     </tr>
                     <tr style="border: 1px black solid">
                         <th style="width: 30%; height: 7rem">
-                            NOME E ASSINATURA DO(S) GESTOR(ES) DIRETO DO(S) FUNCIONÁRIO(S) CITADO(S) ACIMA: 
+                            NOME E ASSINATURA DO GERENTE DA LOJA:
                             <br>
-                            <small>(Ou o nome e assinatura do Gerente de Loja)</small>
                         </th>
                         <th style="display: flex; align-items: flex-start; justify-content: center;">
                         <div>
@@ -444,4 +443,5 @@ requiredInputs.forEach((input) => {
     }
   });
 });
+
 
