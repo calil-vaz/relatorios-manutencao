@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatórios Manutenção</title>
+    <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="../Images/icon-gp-pereira.png">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="style.css">
@@ -68,21 +69,27 @@
             <i id="icon-user" class="fa-regular fa-user" onclick="editProfile()"></i>
     </div>
     <main>
-        <a onclick="verificarPerfil(event)" href="/checklist-manutencao-main/index.html">
-            <p>CHECKLIST <br> DIÁRIO</p>
-            <img src="./Images/logo-checklist.jpg" alt="Logo Checklist Diário">
-        </a>
-        <a onclick="verificarPerfil(event)" href="/baixa-imobilizados-main/index.html">
+        
+            <a onclick="verificarPerfil(event)" href="/checklist-manutencao/">
+                <p>CHECKLIST <br> DIÁRIO</p>
+                <img src="./Images/logo-checklist.jpg" alt="Logo Checklist Diário">
+            </a>
+        
+        <a onclick="verificarPerfil(event)" href="/baixa-imobilizados/">
             <p>BAIXA DE <br> IMOBILIZADOS</p>
             <img src="./Images/logo-baixa-imobilizados.jpg" alt="Logo Baixa de Imobilizados">
         </a>
-        <a onclick="verificarPerfil(event)" href="/relatorio-de-mau-uso-main/">
+        <a onclick="verificarPerfil(event)" href="/relatorio-de-mau-uso/">
             <p>RELATÓRIO DE <br> MAU USO</p>
             <img src="./Images/logo-mau-uso.jpg" alt="Logo Relatório de Mau Uso">
         </a>
-        <a onclick="verificarPerfil(event)" href="/checagem-temperatura/index.html">
+        <a onclick="verificarPerfil(event)" href="/checagem-temperatura/">
             <p>CHECAGEM DE <br> TEMPERATURA</p>
             <img src="./Images/logo-checagem-temperatura.jpg" alt="Logo Checagem de Temperatura">
+        </a>
+        <a onclick="verificarPerfil(event)" href="/energia-reativa/">
+            <p>ENERGIA <br> REATIVA</p>
+            <img src="./Images/logo-energia-reativa.png" alt="Logo Checagem de Temperatura">
         </a>
     </main>
     <footer>
@@ -90,8 +97,8 @@
         <p>PCM SCN</p>
     </footer>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="./utils.js"></script>
     <script src="./main.js"></script>
     <script src="https://kit.fontawesome.com/318c0c8c09.js" crossorigin="anonymous"></script>
 </body>
 </html>
-
