@@ -76,7 +76,7 @@ function generatePDF() {
       duration: 3000,
       close: true,
       gravity: "top",
-      position: "right",
+      position: "center",
       stopOnFocus: true,
       style: {
         background: "red",
@@ -251,3 +251,4 @@ requiredInputs.forEach((input) => {
     }
   });
 });
+
