@@ -5,8 +5,9 @@ var html = document.querySelector("html");
 var body = document.querySelector("body");
 var solicitacaoServico = document.getElementById("solicitacaoServico");
 var requisicaoNimbi = document.getElementById("requisicaoNimbi");
+const scriptURL = "https://script.google.com/macros/s/AKfycbxFL4LSwdrgIUi6HEl-yoJWcZAeZ19ugGfrbPUEZrYefingRyvYgESow4AQxnFLMjrr/exec";
 
-content.style.height = "3300px";
+    let numeroRelatorio;
 
 function goBack() {
   window.history.back();
@@ -14,6 +15,7 @@ function goBack() {
 
 const savedProfile = localStorage.getItem("savedProfile");
 const valores = JSON.parse(savedProfile);
+const inputCusto = document.getElementById("custo");
 
 const requiredInputs = [
   document.getElementById("date"),
@@ -35,7 +37,10 @@ const requiredInputs = [
   document.getElementById("imageInput2"),
   document.getElementById("imageInput3"),
   document.getElementById("imageInput4"),
+  document.getElementById("categoria"),
 ];
+
+let data = {}
 
 function mostrarModal() {
   html.style.overflow = "hidden";
@@ -43,8 +48,6 @@ function mostrarModal() {
   modal.style.visibility = "visible";
   modal.style.display = "flex";
 }
-
-const inputCusto = document.getElementById("custo");
 
   inputCusto.addEventListener("input", (e) => {
     let valor = e.target.value;
@@ -126,7 +129,7 @@ function handleImageSelection(input, imageId) {
   }
 }
 
-function generatePDF() {
+async function generatePDF() {
   let allFieldsFilled = true;
 
   requiredInputs.forEach((input) => {
@@ -140,7 +143,6 @@ function generatePDF() {
 
   inputs.forEach((input) => {
     const label = document.querySelector(`label[for=${input.id}]`);
-
     if (input.files.length < 1) {
       label.classList.add("blinking");
     }
@@ -152,16 +154,79 @@ function generatePDF() {
       duration: 3000,
       close: true,
       gravity: "top",
-      position: "right",
+      position: "center",
       stopOnFocus: true,
-      style: {
-        background: "red",
-      },
+      style: { background: "red" },
     }).showToast();
-    return;
+      return; 
   }
 
-  const numeroAleatorio = Math.floor(1000 + Math.random() * 9000);
+  mostrarModal();  
+
+  async function gerarNovoId(patrimonioNovo) {
+    try {
+      const res = await fetch(
+        "https://opensheet.elk.sh/1uFi_D1yuN3HALqLdJFUQ86Il2bkYkU50fLPmLEmBev8/RMU"
+      );
+      const data = await res.json();
+
+      const patrimoniosInvalidos = ["", "0", "00", "000", "0000", "00000", "0000000", "00000000"];
+
+      const iguais = data.filter(
+        item => item["PATRIMÔNIO"] === patrimonioNovo && !patrimoniosInvalidos.includes(patrimonioNovo)
+      );
+
+
+      if (iguais.length === 0) {
+        const novoId = Math.floor(10000 + Math.random() * 9000);
+        return novoId;
+      } else {
+        const ids = iguais.map((i) => i["ID DO RELATÓRIO"]);
+        let max = 0;
+        ids.forEach((id) => {
+          const partes = id.split(".");
+          if (partes.length > 1) {
+            const sufixo = Number(partes[1]);
+            if (sufixo > max) max = sufixo;
+          }
+        });
+        const novoId = `${iguais[0]["ID DO RELATÓRIO"].split(".")[0]}.${max + 1}`;
+        return novoId;
+      }
+    } catch (err) {
+      console.error("Erro ao gerar novo ID:", err);
+      return Math.floor(10000 + Math.random() * 9000);
+    }
+  }
+
+  const patrimonioInformado = requiredInputs[5].value.toUpperCase();
+  numeroRelatorio = await gerarNovoId(patrimonioInformado);
+
+  data = {
+    loja: valores[1].toUpperCase(),
+    numRelatorio: numeroRelatorio,
+    solicitacaoServico: solicitacaoServico.value.toUpperCase(),
+    requisicaoNimbi: requisicaoNimbi.value.toUpperCase(),
+    ativo: requiredInputs[1].value.toUpperCase(),
+    categoria: requiredInputs[19].value.toUpperCase(),
+    patrimonio: patrimonioInformado,
+    serie: requiredInputs[4].value.toUpperCase(),
+    modelo: requiredInputs[3].value.toUpperCase(),
+    marca: requiredInputs[2].value.toUpperCase(),
+    descricaoDetalhada: requiredInputs[7].value.toUpperCase(),
+    impactoFuncionamento: requiredInputs[8].value.toUpperCase(),
+    danosEquipamento: requiredInputs[9].value.toUpperCase(),
+    medidasImediatas: requiredInputs[10].value.toUpperCase(),
+    recomendacoes: requiredInputs[11].value.toUpperCase(),
+    custo: inputCusto.value.toUpperCase(),
+    funcionariosEnvolvidos: requiredInputs[12].value.toUpperCase(),
+    nomeGestor: requiredInputs[13].value.toUpperCase(),
+    bandeira: valores[0].toUpperCase(),
+    regional: valores[5].toUpperCase(),
+    dataOcorrido: requiredInputs[14].value.toUpperCase(),
+    responsavel: valores[2].toUpperCase(),
+    matriculaResponsavel: valores[3].toUpperCase(),
+  };
 
   let beforeElement = document.createElement("div");
   let afterElement = document.createElement("div");
@@ -169,8 +234,8 @@ function generatePDF() {
   beforeElement.innerHTML = `<table>
                 <thead>
                     <tr>
-                        <th style="text-align: center; font-size: x-large;">
-                            RELATÓRIO DE MAU USO - N°${numeroAleatorio}
+                        <th style="text-align: center; font-size: large;">
+                            RELATÓRIO DE MAU USO - N°${numeroRelatorio}
                         </th>
                     </tr>
                 </thead>
@@ -275,32 +340,27 @@ function generatePDF() {
                 </thead>
             </table>
             <table>
-                <thead>
-                    <tr>
-                        <th style="text-align: center;">3.CONSEQUÊNCIAS</th>
-                    </tr>
-                </thead>
-            </table>
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width: 30%; height: 160px;">
-                            IMPACTO NO FUNCIONAMENTO:
-                            <small>(Descrever como o mau uso afetou as operações da loja como: atrasos, perda de
-                                vendas,etc.)</small>
-                        </th>
-                        <th>${requiredInputs[8].value.toUpperCase()}</th>
-                    </tr>
-                    <tr>
-                        <th style="width: 30%; height: 160px;">
-                            DANOS NO EQUIPAMENTO:
-                            <small>(Descrever se houve danos físicos, necessidade de reparos ou substituição de
-                                equipamento.)</small>
-                        </th>
-                        <th>${requiredInputs[9].value.toUpperCase()}</th>
-                    </tr>
-                    </thead>
-            </table>
+  <thead>
+    <tr>
+      <th colspan="2" style="text-align: center;">3. CONSEQUÊNCIAS</th>
+    </tr>
+    <tr>
+      <th style="width: 30%; height: 160px;">
+        IMPACTO NO FUNCIONAMENTO:
+        <small>(Descrever como o mau uso afetou as operações da loja como: atrasos, perda de vendas, etc.)</small>
+      </th>
+      <th>${requiredInputs[8].value.toUpperCase()}</th>
+    </tr>
+    <tr>
+      <th style="width: 30%; height: 160px;">
+        DANOS NO EQUIPAMENTO:
+        <small>(Descrever se houve danos físicos, necessidade de reparos ou substituição de equipamento.)</small>
+      </th>
+      <th>${requiredInputs[9].value.toUpperCase()}</th>
+    </tr>
+  </thead>
+</table>
+
             
             <table class="page-break"">
                 <thead>
@@ -359,8 +419,9 @@ function generatePDF() {
                     </tr>
                     <tr style="border: 1px black solid">
                         <th style="width: 30%; height: 7rem">
-                            NOME E ASSINATURA DO GERENTE DA LOJA:
+                            NOME E ASSINATURA DO(S) GESTOR(ES) DIRETO DO(S) FUNCIONÁRIO(S) CITADO(S) ACIMA: 
                             <br>
+                            <small>(Ou o nome e assinatura do Gerente de Loja)</small>
                         </th>
                         <th style="display: flex; align-items: flex-start; justify-content: center;">
                         <div>
@@ -393,14 +454,15 @@ function generatePDF() {
 
   document.getElementById("content").style.display = "block";
   const element = document.getElementById("content");
-  mostrarModal();
+
+  handlePageBreaks(element);
 
   html2pdf()
     .set({
-      margin: [27, 0, 25, 0],
+      margin: [30, 0, 25, 0],
       html2canvas: { scale: window.devicePixelRatio > 1 ? 3 : 2 },
       jsPDF: { format: "a4", orientation: "portrait" },
-      pagebreak: { mode: ["css", "legacy"] },
+      pagebreak: { mode: ["css", "legacy"] }, 
     })
     .from(element)
     .toPdf()
@@ -409,6 +471,31 @@ function generatePDF() {
       const pageCount = pdf.internal.getNumberOfPages();
       const pageWidth = pdf.internal.pageSize.getWidth();
       const pageHeight = pdf.internal.pageSize.getHeight();
+
+       // Envia os dados para o Apps Script
+  fetch(scriptURL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(r => r.json())
+    .then(result => {
+      if (result.resultado === "sucesso") {
+        document.getElementById("status").textContent = "✅ Dados enviados!";
+        
+      } else {
+        document.getElementById("status").textContent = "⚠️ Erro: " + result.mensagem;
+        console.error(result);
+      }
+      e.target.reset();
+    })
+    .catch(err => {
+      document.getElementById("status").textContent = "❌ Erro ao enviar!";
+      console.error(err);
+    })
 
       for (let i = 1; i <= pageCount; i++) {
         pdf.setPage(i);
@@ -424,11 +511,11 @@ function generatePDF() {
       }
 
       pdf.save(
-        `${numeroAleatorio}-LOJA ${
+        `${numeroRelatorio}-LOJA ${
           valores[1]
         }-RELATÓRIO DE MAU USO-${requiredInputs[1].value.toUpperCase()}.pdf`
       );
-    })
+    })    
     .then(() => {
       window.location.reload();
     });
@@ -444,4 +531,30 @@ requiredInputs.forEach((input) => {
   });
 });
 
+function handlePageBreaks(contentElement) {
+    const PAGE_HEIGHT = 1400; 
+    const SAFE_CONTENT_HEIGHT = PAGE_HEIGHT - 100; 
 
+    if (!contentElement) return;
+
+    const tables = contentElement.querySelectorAll('table');
+    
+    let currentPageY = 0;
+
+    tables.forEach(table => {
+        if (table.classList.contains('page-break')) {
+            currentPageY = table.offsetTop;
+            return;
+        }
+
+        const tableTop = table.offsetTop;
+        const tableHeight = table.offsetHeight;
+        const yRelativeToPageTop = tableTop - currentPageY;
+
+        if (yRelativeToPageTop + tableHeight > SAFE_CONTENT_HEIGHT) {
+            table.classList.add('page-break');
+
+            currentPageY = tableTop;
+        }
+    });
+}
