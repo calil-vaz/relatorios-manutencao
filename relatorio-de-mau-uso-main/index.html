@@ -49,6 +49,21 @@
             </div>
 
             <div class="cardItem">
+                CATEGORIA
+                <select name="data-item" id="categoria" class="item">
+                    <option value="">Selecione a Categoria do Ativo</option>
+                    <option value="MÁQUINAS E EQUIPAMENTOS">Máquinas e Equipamentos</option>
+                    <option value="REFRIGERAÇÃO">Refrigeração</option>
+                    <option value="CIVIL PREDIAL/PPCI-SPDA/ETE-ETA/ESGOTO">Civil Predial/PPCI-SPDA/ETE-ETA/Esgoto</option>
+                    <option value="CARRINHOS">Carrinhos</option>
+                    <option value="ELÉTRICA/GERADORES/NOBREAKS">Elétrica/Geradores/Nobreaks</option>
+                    <option value="EMPILHADEIRAS">Empilhadeiras</option>
+                    <option value="CLIMATIZAÇÃO">Climatização</option>
+                    <option value="OUTRO">Outro</option>
+                </select>
+            </div>
+
+            <div class="cardItem">
                 MARCA:
                 <input id="marca" type="text" placeholder="Marca do ativo">
             </div>
@@ -96,7 +111,7 @@
                     ocorreu.
                     Incluir se houve envolvimento de funcionários ou clientes.)</small>
 
-                <textarea name="" id="descricaoDetalhada" cols="30"></textarea>
+                <textarea name="" id="descricaoDetalhada" cols="30" maxLength="1500"></textarea>
             </div>
             <h4>3. CONSEQUÊNCIAS</h4>
             <div class="cardItem">
@@ -104,14 +119,14 @@
                 <small>(Descrever como o mau uso afetou as operações da loja como: atrasos, perda de
                     vendas,etc.)</small>
 
-                <textarea name="" id="impactoFuncionamento" cols="30"></textarea>
+                <textarea name="" id="impactoFuncionamento" cols="30" maxLength="1500"></textarea>
             </div>
 
             <div class="cardItem">
                 DANOS NO EQUIPAMENTO:
                 <small>(Descrever se houve danos físicos, necessidade de reparos ou substituição de
                     equipamento.)</small>
-                <textarea name="" id="danosEquipamento" cols="30"></textarea>
+                <textarea name="" id="danosEquipamento" cols="30" maxLength="1500"></textarea>
             </div>
 
 
@@ -120,7 +135,7 @@
                 MEDIDAS IMEDIATAS:
                 <small>(Descrever as ações tomadas imediatamente após o incidente.)</small>
 
-                <textarea name="" id="medidasImediatas" cols="30"></textarea>
+                <textarea name="" id="medidasImediatas" cols="30" maxLength="1500"></textarea>
             </div>
 
             <div class="cardItem">
@@ -129,7 +144,7 @@
                     sinalizações,
                     etc.)</small>
 
-                <textarea name="" id="recomendacoes" cols="30"></textarea>
+                <textarea name="" id="recomendacoes" cols="30" maxLength="1500"></textarea>
             </div>
 
             <div class="cardItem">
@@ -176,7 +191,8 @@
             </div>
 
             <div class="cardItem">
-                NOME E ASSINATURA DO GERENTE DA LOJA
+                NOME DO(S) GESTOR(ES) DIRETO DO(S) FUNCIONÁRIO(S) CITADO(S) ACIMA:
+                <small>(Ou o nome do Gerente de Loja.)</small>
                 <small>*(Após o relatório ser gerado, o(s) gestor(es) terão que assinar.)</small>
                 <input id="supervisor" type="text" placeholder="Nome do(s) gestor(es)">
             </div>
@@ -244,10 +260,9 @@
                 </tbody>
             </table>
         </div>
+        <p id="status"></p>
     </main>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="./scripts.js"></script>
 </body>
 </html>
-
-
