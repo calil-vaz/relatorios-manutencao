@@ -49,7 +49,8 @@ div#modal {
   visibility: hidden;
 }
 #content {
-  width: 794px;
+  width: 750px; 
+  margin: 0 auto;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -66,6 +67,7 @@ div#modal {
 }
 
 i.fa-arrow-circle-left {
+  cursor: pointer;
   position: fixed;
   left: 0;
   margin-left: 1rem;
@@ -115,7 +117,7 @@ form {
   display: flex;
   flex-direction: column;
   overflow: auto;
-  height: 57vh;
+  height: 35vh;
 }
 
 #contentButton {
@@ -286,4 +288,94 @@ footer p {
 }
 .page-break {
   page-break-before: always;
+}
+
+
+@media screen and (max-width: 768px) {
+  #content_img img {
+    width: 8rem;
+  }
+  
+  form {
+    width: 95%;
+    margin-top: 10rem;
+  }
+  
+  table {
+    width: 100%;
+    margin-left: 0;
+    font-size: 0.7rem;
+  }
+  
+  th, td {
+    padding: 2px;
+  }
+  
+  .cardItem {
+    padding: 0.8rem;
+  }
+  
+  #generate-pdf {
+    width: 7rem;
+    padding: 0.8rem 0.4rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #content_img img {
+    width: 8rem;
+  }
+  
+  form {
+    width: 98%;
+    margin-top: 9rem;
+  }
+  
+  table {
+    font-size: 0.7rem;
+  }
+  
+  .cardItem {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+  
+  #generate-pdf {
+    width: 6rem;
+    padding: 0.6rem 0.3rem;
+    font-size: 0.9rem;
+  }
+  
+  i.fa-arrow-circle-left {
+    top: 3rem;
+    font-size: 1.2rem;
+  }
+}
+
+@media print {
+  #content_img,
+  #contentButton,
+  footer {
+    display: none !important;
+  }
+  
+  #content {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  table {
+    width: 100% !important;
+    margin: 0 !important;
+    page-break-inside: avoid;
+  }
+  
+  .page-break {
+    page-break-before: always;
+  }
+  
+  body {
+    background: white !important;
+  }
 }
