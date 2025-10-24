@@ -532,7 +532,7 @@ requiredInputs.forEach((input) => {
 });
 
 function handlePageBreaks(contentElement) {
-    const PAGE_HEIGHT = 1400; 
+    const PAGE_HEIGHT = 1500; 
     const SAFE_CONTENT_HEIGHT = PAGE_HEIGHT - 100; 
 
     if (!contentElement) return;
@@ -558,3 +558,4 @@ function handlePageBreaks(contentElement) {
         }
     });
 }
+
