@@ -1,8 +1,4 @@
-/**
- * Utilitários compartilhados para o sistema de relatórios
- */
 
-// Configurações globais
 const CONFIG = {
   BANDEIRAS: [
     "Fort Atacadista",
@@ -39,44 +35,24 @@ const CONFIG = {
   }
 };
 
-// Utilitários para perfil
 const ProfileUtils = {
-  /**
-   * Obtém o perfil salvo do localStorage
-   * @returns {Array|null} Array com dados do perfil ou null
-   */
   getSavedProfile() {
     const savedProfile = localStorage.getItem("savedProfile");
     return savedProfile ? JSON.parse(savedProfile) : null;
   },
 
-  /**
-   * Verifica se existe um perfil válido
-   * @returns {boolean}
-   */
   hasValidProfile() {
     const profile = this.getSavedProfile();
     return profile && profile.length >= 6;
   },
 
-  /**
-   * Formata a data para o padrão brasileiro
-   * @param {string} dateString - Data no formato YYYY-MM-DD
-   * @returns {string} Data no formato DD/MM/YYYY
-   */
   formatDateBR(dateString) {
     const [ano, mes, dia] = dateString.split("-");
     return `${dia}/${mes}/${ano}`;
   }
 };
 
-// Utilitários para validação
 const ValidationUtils = {
-  /**
-   * Valida se todos os campos obrigatórios estão preenchidos
-   * @param {Array} fields - Array de elementos a serem validados
-   * @returns {boolean}
-   */
   validateRequiredFields(fields) {
     let allValid = true;
     
@@ -88,7 +64,6 @@ const ValidationUtils = {
         field.classList.add("invalid", "error");
       }
       
-      // Adiciona listener para remover erro quando preenchido
       field.addEventListener("input", () => {
         if (field.value && field.value.trim() !== "") {
           field.classList.remove("invalid", "error");
@@ -99,9 +74,6 @@ const ValidationUtils = {
     return allValid;
   },
 
-  /**
-   * Exibe toast de erro para campos não preenchidos
-   */
   showValidationError() {
     if (typeof Toastify !== 'undefined') {
       Toastify({
@@ -117,14 +89,7 @@ const ValidationUtils = {
   }
 };
 
-// Utilitários para PDF
 const PDFUtils = {
-  /**
-   * Gera PDF com configurações otimizadas
-   * @param {HTMLElement} element - Elemento a ser convertido
-   * @param {string} filename - Nome do arquivo
-   * @param {Function} callback - Função de callback após geração
-   */
   generatePDF(element, filename, callback) {
     html2pdf()
       .set(CONFIG.PDF_CONFIG)
@@ -136,7 +101,6 @@ const PDFUtils = {
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
 
-        // Adiciona logo e rodapé em todas as páginas
         for (let i = 1; i <= pageCount; i++) {
           pdf.setPage(i);
           pdf.addImage("../Images/logo-gp-pereira 2.png", "PNG", 85, -4, 40, 40);
@@ -152,11 +116,8 @@ const PDFUtils = {
   }
 };
 
-// Utilitários para UI
 const UIUtils = {
-  /**
-   * Mostra modal de loading
-   */
+
   showModal() {
     const modal = document.getElementById("modal");
     const html = document.querySelector("html");
@@ -170,9 +131,6 @@ const UIUtils = {
     }
   },
 
-  /**
-   * Esconde modal de loading
-   */
   hideModal() {
     const modal = document.getElementById("modal");
     const html = document.querySelector("html");
@@ -186,17 +144,10 @@ const UIUtils = {
     }
   },
 
-  /**
-   * Função genérica para voltar à página anterior
-   */
   goBack() {
     window.history.back();
   },
 
-  /**
-   * Exibe toast de sucesso
-   * @param {string} message - Mensagem a ser exibida
-   */
   showSuccessToast(message) {
     if (typeof Toastify !== 'undefined') {
       Toastify({
@@ -212,7 +163,6 @@ const UIUtils = {
   }
 };
 
-// Exporta os utilitários (se usando módulos)
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     CONFIG,
