@@ -439,7 +439,7 @@ async function generatePDF() {
                         <th></th>
                     </tr>
                     <tr>
-                        <th style="width: 30%;">
+                        <th style="width: 30%; padding: 20px 0">
                             ASSINATURA DO GERENTE REGIONAL DE MANUTENÇÃO:
                         </th>
                         <th></th>
@@ -557,5 +557,6 @@ function handlePageBreaks(contentElement) {
         }
     });
 }
+
 
 
