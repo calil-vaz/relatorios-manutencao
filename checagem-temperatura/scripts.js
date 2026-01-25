@@ -201,9 +201,42 @@ function generatePDF() {
   const element = document.getElementById("content");
   mostrarModal();
 
+  function enviarParaPlanilha() {
+  const payload = {
+    data: formatarData(requiredInputs[0].value),
+    bandeira: valores[0],
+    filial: valores[1],
+    tecnico: valores[2],
+    ponto1: requiredInputs[1].value,
+    ponto2: requiredInputs[2].value,
+    ponto3: requiredInputs[3].value,
+    ponto4: requiredInputs[4].value,
+    ponto5: requiredInputs[5].value
+  };
+
+  fetch("https://script.google.com/macros/s/AKfycbxnGPGkqLyPC2wy86G2201BRKyWeKcrkzZ5j6EnUWMxkmy_UsrjG1Fxm37MeEwnVEVZJQ/exec", {
+  method: "POST",
+  mode: "no-cors",
+  body: JSON.stringify(payload),
+  headers: {
+    "Content-Type": "application/json"
+  }
+})
+.then(() => {
+  console.log("Dados enviados para a planilha (sem retorno)");
+})
+.catch(err => {
+  console.error("Erro ao enviar dados:", err);
+});
+
+
+}
+
+enviarParaPlanilha();
+
   html2pdf()
     .set({
-      margin: [27, 0, 22, 0],
+      margin: [28, 0, 22, 0],
       html2canvas: { scale: window.devicePixelRatio > 1 ? 3 : 2 },
       jsPDF: { format: "a4", orientation: "portrait" },
       pagebreak: { mode: ["css", "legacy"] },
@@ -251,4 +284,3 @@ requiredInputs.forEach((input) => {
     }
   });
 });
-
