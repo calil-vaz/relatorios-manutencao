@@ -2,99 +2,172 @@ const modal = document.getElementById("modal");
 const html = document.querySelector("html");
 const body = document.querySelector("body");
 const contentImg = document.querySelector("#content_img");
-const navHeight = contentImg.offsetHeight;
-const savedProfile = localStorage.getItem("savedProfile");
-const valores = JSON.parse(savedProfile); // [bandeira, filial, nome, matricula]
+const savedProfile = ProfileUtils.getSavedProfile();
 
 function goBack() {
-  window.history.back();
+  UIUtils.goBack();
 }
 
 window.addEventListener("scroll", () => {
   contentImg.classList.toggle("scroll", window.scrollY >= 10);
 });
 
-function mostrarModal() {
-  html.style.overflow = "hidden";
-  body.style.overflow = "hidden";
-  modal.style.visibility = "visible";
-  modal.style.display = "flex";
+function getChecklistNC() {
+  return JSON.parse(localStorage.getItem("checklistNC")) || {};
 }
+
+function saveChecklistNC(data) {
+  localStorage.setItem("checklistNC", JSON.stringify(data));
+}
+
+function enviarParaPlanilha(loja, itens) {
+  fetch("https://script.google.com/macros/s/AKfycbxxtuHM6dEnNJjPFvFAG-JCPQIduxIznB4DhifHyuoYMpFX7okOJm6po5p8zz8Rgz8TFw/exec", {
+    method: "POST",
+    body: JSON.stringify({
+      loja: loja,
+      itens: itens
+    })
+  })
+  .then(res => res.json())
+  .then(res => {
+    console.log("Planilha atualizada:", res);
+  })
+  .catch(err => {
+    console.error("Erro ao enviar para planilha", err);
+  });
+}
+
+document.querySelectorAll(".cardItem").forEach(card => {
+  const select = card.querySelector("select.item");
+  const ssInput = card.querySelector(".ss-input");
+
+  if (!select || !ssInput) return;
+
+  const id = select.id;
+  const savedData = getChecklistNC();
+
+  if (savedData[id]) {
+    select.value = savedData[id].status;
+
+    if (savedData[id].status === "NC") {
+      ssInput.style.display = "block";
+      ssInput.value = savedData[id].ss || "";
+      ssInput.classList.toggle("invalid", !ssInput.value);
+    }
+  }
+
+  select.addEventListener("change", () => {
+    const data = getChecklistNC();
+
+    if (select.value === "NC") {
+      ssInput.style.display = "block";
+      ssInput.required = true;
+
+      ssInput.classList.toggle("invalid", !ssInput.value);
+
+      data[id] = {
+        status: "NC",
+        ss: ssInput.value || ""
+      };
+
+      saveChecklistNC(data);
+    }
+
+    if (select.value === "C" && data[id]?.status === "NC") {
+      const confirmar = confirm(
+        "Este item estava como NÃO CONFORME.\nConfirma que o problema foi resolvido?"
+      );
+
+      if (confirmar) {
+        delete data[id];
+        ssInput.value = "";
+        ssInput.classList.remove("invalid");
+        ssInput.style.display = "none";
+        ssInput.required = false;
+        saveChecklistNC(data);
+      } else {
+        select.value = "NC";
+        ssInput.style.display = "block";
+        ssInput.classList.toggle("invalid", !ssInput.value);
+      }
+    }
+
+    if (select.value === "NA") {
+      ssInput.style.display = "none";
+      ssInput.classList.remove("invalid");
+      ssInput.required = false;
+    }
+  });
+
+  ssInput.addEventListener("input", () => {
+    const data = getChecklistNC();
+
+    ssInput.classList.toggle("invalid", ssInput.value.trim() === "");
+
+    if (data[id]) {
+      data[id].ss = ssInput.value;
+      saveChecklistNC(data);
+    }
+  });
+});
 
 function App() {
   const data = document.getElementById("date");
   const main = document.getElementById("main");
   const cardItems = document.querySelectorAll(".cardItem");
-  let allFilled = true;
+  
+  const requiredFields = [data];
+  const selectFields = [];
   let itens = [];
 
   body.classList.add("cssBodyPDF");
 
   cardItems.forEach((cardItem) => {
     const select = cardItem.querySelector("select.item");
-    const input = cardItem.querySelector('input[type="text"]');
+    const inputObs = cardItem.querySelector('input[type="text"]:not(.ss-input)');
+    const ssInput = cardItem.querySelector('.ss-input');
 
-    select.classList.remove("invalid");
-    input.classList.remove("invalid");
+
+    if (select) {
+      selectFields.push(select);
+      requiredFields.push(select);
+    }
 
     itens.push({
       numero: cardItem.textContent.trim().split("-")[0] + " - ",
-      status: select.value,
-      observacoes: input.value,
-    });
-
-    if (!select.value) {
-      allFilled = false;
-      select.classList.add("invalid");
-    }
-
-    select.addEventListener("change", () => {
-      if (select.value) select.classList.remove("invalid");
+      status: select ? select.value : "",
+      observacoes: inputObs ? inputObs.value : "",
+      ss: ssInput && ssInput.value ? ssInput.value : ""
     });
   });
 
-  [data].forEach((campo) => {
-    campo.classList.remove("invalid");
+const existeSSInvalida = document.querySelector(".ss-input.invalid");
 
-    campo.addEventListener("input", () => {
-      if (campo.value) campo.classList.remove("invalid");
-    });
+if (
+  !ValidationUtils.validateRequiredFields(requiredFields) ||
+  existeSSInvalida
+) {
+  ValidationUtils.showValidationError();
+  return;
+}
 
-    if (!campo.value) {
-      allFilled = false;
-      campo.classList.add("invalid");
-    }
-  });
+  UIUtils.showModal();
 
-  if (!allFilled) {
-    Toastify({
-      text: "Preencha todos os campos obrigatórios",
-      duration: 3000,
-      close: true,
-      gravity: "top",
-      position: "center",
-      stopOnFocus: true,
-      style: { background: "red" },
-    }).showToast();
-    return;
-  }
-
-  mostrarModal();
-
+  const dateBR = ProfileUtils.formatDateBR(data.value);
   const [ano, mes, dia] = data.value.split("-");
-  const dateBR = `${dia}/${mes}/${ano}`;
 
   const gerarLinhasTabela = () =>
-    itens
-      .map(
-        (item) => `
-      <tr>
-        <td class="setor">${item.numero}</td>
-        <td style="text-align: center;">${item.status}</td>
-        <td>${item.observacoes}</td>
-      </tr>`
-      )
-      .join("");
+  itens.map(item => `
+    <tr>
+      <td class="setor">${item.numero}</td>
+      <td style="text-align: center;">${item.status}</td>
+      <td>
+        ${item.observacoes}
+        ${item.ss ? `<div class="ss-pdf"><strong>SS:</strong> ${item.ss}</div>` : ""}
+      </td>
+    </tr>
+  `).join("");
+
 
   main.innerHTML = `
     <div id="content">
@@ -111,8 +184,8 @@ function App() {
       <table>
         <thead>
           <tr>
-            <th>BANDEIRA:</th><th>${valores[0].toUpperCase()}</th>
-            <th>FILIAL:</th><th>${valores[1].toUpperCase()}</th>
+            <th>BANDEIRA:</th><th>${savedProfile[0].toUpperCase()}</th>
+            <th>FILIAL:</th><th>${savedProfile[1].toUpperCase()}</th>
             <th>DATA DO RELATÓRIO:</th><th>${dateBR}</th>
           </tr>
         </thead>
@@ -122,9 +195,9 @@ function App() {
         <thead>
           <tr>
             <th style="width: 25%;">ELABORADO POR:</th>
-            <th style="width: 35%;">${valores[2].toUpperCase()}</th>
+            <th style="width: 35%;">${savedProfile[2].toUpperCase()}</th>
             <th style="width: 20%;">MATRÍCULA:</th>
-            <th style="width: 20%;">${valores[3].toUpperCase()}</th>
+            <th style="width: 20%;">${savedProfile[3].toUpperCase()}</th>
           </tr>
         </thead>
       </table>
@@ -143,45 +216,35 @@ function App() {
           ${gerarLinhasTabela()}
         </tbody>
       </table>
-      
     </div>
   `;
 
+
+const loja = savedProfile[1]; 
+
+const registros = itens.map(item => {
+  let valor = "";
+
+  if (item.status === "NC" && item.ss) {
+    valor = `NC - ${item.ss}`;
+  } else if (item.status === "C") {
+    valor = "C";
+  } else if (item.status === "NA") {
+    valor = "NA";
+  }
+
+  return {
+    setor: item.numero.replace("-", "").trim(),
+    [dateBR]: valor
+  };
+});
+
+enviarParaPlanilha(loja, registros);
+
   const element = document.getElementById("content");
+  const filename = `LOJA ${savedProfile[1]}_CHECKLIST DIÁRIO_DIA-${dia}-${mes}-${ano}.pdf`;
 
-  html2pdf()
-    .set({
-      margin: [30, 0, 20, 0],
-      html2canvas: { scale: window.devicePixelRatio > 1 ? 3 : 2 },
-      jsPDF: { format: "a4", orientation: "portrait" },
-      pagebreak: { mode: ["css", "legacy"] },
-    })
-    .from(element)
-    .toPdf()
-    .get("pdf")
-    .then((pdf) => {
-      const pageCount = pdf.internal.getNumberOfPages();
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
-
-      for (let i = 1; i <= pageCount; i++) {
-        pdf.setPage(i);
-        pdf.addImage("../Images/logo-gp-pereira 2.png", "PNG", 85, -4, 40, 40);
-        pdf.addImage(
-          "../Images/footer.png",
-          "PNG",
-          0,
-          pageHeight - 20,
-          pageWidth,
-          15
-        );
-      }
-
-      pdf.save(
-        `LOJA ${valores[1]}_CHECKLIST DIÁRIO_DIA-${dia}-${mes}-${ano}.pdf`
-      );
-    })
-    .then(() => {
-      window.location.reload();
-    });
+  PDFUtils.generatePDF(element, filename, () => {
+    window.location.reload();
+  });
 }
