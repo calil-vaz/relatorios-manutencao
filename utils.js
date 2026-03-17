@@ -1,6 +1,7 @@
 
 const CONFIG = {
   BANDEIRAS: [
+    "Grupo Pereira",
     "Fort Atacadista",
     "Sempre Fort", 
     "Bate Fort",
@@ -10,6 +11,7 @@ const CONFIG = {
     "Trudys"
   ],
   REGIONAIS: [
+    "Nacional",
     "Distrito Federal",
     "Goiás",
     "Mato Grosso",
